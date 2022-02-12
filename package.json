@@ -1,0 +1,12 @@
+{
+  "name": "jars-admin",
+  "version": "1.0.0",
+  "description": "Web frontend for jars",
+  "main": "public/index.php",
+  "dependencies": {
+    "jquery": "^3.4.1"
+  },
+  "devDependencies": {},
+  "author": "Oran Fry",
+  "license": "MIT"
+}

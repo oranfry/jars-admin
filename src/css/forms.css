@@ -1,0 +1,79 @@
+.form-row {
+    position: relative;
+    margin-top: 0.3em;
+}
+
+.form-row__label {
+    float: left;
+    width: 25%;
+    padding-right: 1em;
+    text-align: right;
+}
+
+.form-row__value {
+    text-align: left;
+    position: relative;
+    float: left;
+    width: 75%;
+    padding-left: 2em;
+    padding-right: 4em;
+}
+
+.form--even .form-row__label, .form--even .form-row__value {
+    width: 50%;
+}
+
+.form-row__value > input[type="checkbox"]:first-child {
+    position: absolute;
+    left: 0;
+}
+
+.form-row__value input[type="text"],
+.form-row__value textarea,
+.form-row__value .textbox {
+    width: 100%;
+}
+
+.form-row__value textarea,
+.form-row__value .textbox {
+    height: 10em;
+    resize: vertical;
+}
+
+.form-row__value input,
+.form-row__value select,
+.form-row__value button,
+.form-row__value textarea,
+.form-row__value .textbox,
+.form-row__value .button {
+    display: inline-block;
+    appearance: none;
+    -moz-appearance: none;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 0;
+    color: #333;
+    text-decoration: none;
+}
+
+.form-row__value input[type="checkbox"] {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-size: contain;
+    filter: grayscale(100%);
+    margin: 0;
+}
+
+.form-row__label,
+.form-row__value input,
+.form-row__value select,
+.form-row__value button,
+.form-row__value textarea,
+.form-row__value .textbox,
+.form-row__value .button {
+    padding: 0 0.3em;
+    font-size: 1em;
+    line-height: 2em;
+}

@@ -1,0 +1,39 @@
+
+.icon {
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
+    line-height: 1.2em;
+    font-style: normal;
+    vertical-align: top;
+    position: relative;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    font-weight: bold;
+}
+
+.icon.icon--small {
+    width: 0.8em;
+    height: 0.8em;
+    line-height: 0.8em;
+}
+
+.icon.icon--big {
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+}
+
+.icon.icon--gray {
+    filter: grayscale(100%) brightness(0.5);
+    -webkit-filter: grayscale(100%) brightness(0.5);
+}
+
+.icon.icon--green {
+    filter: hue-rotate(0.33turn) brightness(0.8);
+}
+
+.icon.icon--red {
+    filter: brightness(0.8);
+}
