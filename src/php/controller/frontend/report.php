@@ -4,7 +4,7 @@ use \jars\Filesystem;
 use \jars\Report;
 
 $filesystem = new Filesystem();
-$config = $jars->config($jars->token());
+$config = $jars->config();
 $reports = $config->reports;
 $report = $jars->report(REPORT_NAME);
 $min = @$_GET['version'];

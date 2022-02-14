@@ -8,7 +8,8 @@ if ($jars->token()) {
 }
 
 if (@$_COOKIE['token'] && $jars->verify_token($_COOKIE['token'])) {
-    $config = $jars->config($_COOKIE['token']);
+    $jars->token($_COOKIE['token']);
+    $config = $jars->config();
 
     list($first) = array_keys($config->reports);
 
