@@ -96,12 +96,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/oranfry/subsimple.git",
-                "reference": "bd11b0941acb7423fe861f62a757602599c207a6"
+                "reference": "46700b4b411363f33d198d883b27787f46bee4d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oranfry/subsimple/zipball/bd11b0941acb7423fe861f62a757602599c207a6",
-                "reference": "bd11b0941acb7423fe861f62a757602599c207a6",
+                "url": "https://api.github.com/repos/oranfry/subsimple/zipball/46700b4b411363f33d198d883b27787f46bee4d5",
+                "reference": "46700b4b411363f33d198d883b27787f46bee4d5",
                 "shasum": ""
             },
             "default-branch": true,
@@ -115,7 +115,7 @@
                 "source": "https://github.com/oranfry/subsimple/tree/master",
                 "issues": "https://github.com/oranfry/subsimple/issues"
             },
-            "time": "2022-02-12T02:42:03+00:00"
+            "time": "2022-02-17T10:32:00+00:00"
         }
     ],
     "packages-dev": [],
