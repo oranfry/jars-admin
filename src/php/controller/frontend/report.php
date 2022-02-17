@@ -2,6 +2,7 @@
 
 use \jars\Filesystem;
 use \jars\Report;
+use obex\Obex;
 
 $filesystem = new Filesystem();
 $config = $jars->config();
@@ -45,7 +46,7 @@ foreach (@$config->report_fields[REPORT_NAME] ?? [(object) ['name' => 'id']] as 
 $linetypes = array_map(function ($name) use ($jars) {
     $linetype = $jars->linetype($name);
 
-    $linetype->parent_fields = array_filter(map_objects(
+    $linetype->parent_fields = array_filter(Obex::map(
         $linetype->find_incoming_links(),
         '@only_parent'
     ));

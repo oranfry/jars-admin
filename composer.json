@@ -13,11 +13,16 @@
         },
         {
             "type": "vcs",
+            "url": "git@github.com:oranfry\/obex.git"
+        },
+        {
+            "type": "vcs",
             "url": "git@github.com:oranfry\/subsimple.git"
         }
     ],
     "require": {
         "oranfry\/jars-core": "*",
+        "oranfry\/obex": "*",
         "oranfry\/subsimple": "*"
     },
     "autoload": {

@@ -1,3 +1,4 @@
+<?php use obex\Obex; ?>
 <div class="sidebar" id="sidebar">
     <h3>reports</h3>
     <nav>
@@ -68,7 +69,7 @@
                             <td class="extend">
                                 <p><?= @$line->type ?: '&nbsp;' ?></p>
                                 <span style="display: none;">
-                                    <?php if ($linetype = find_object($linetypes, 'name', 'is', @$line->type)): ?>
+                                    <?php if ($linetype = Obex::find($linetypes, 'name', 'is', @$line->type)): ?>
                                         <?php foreach (array_merge(['id'], $linetype->parent_fields, array_keys($linetype->fields), array_keys($linetype->borrow)) as $name): ?>
                                             <input type="hidden" name="<?= $name ?>" value="<?= htmlspecialchars(@$line->{$name}) ?>">
                                         <?php endforeach ?>
