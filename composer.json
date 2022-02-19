@@ -5,23 +5,23 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:oranfry\/jars-client.git"
+            "url": "https:\/\/github.com\/oranfry\/jars-client.git"
         },
         {
             "type": "vcs",
-            "url": "git@github.com:oranfry\/jars-contracts.git"
+            "url": "https:\/\/github.com\/oranfry\/jars-contracts.git"
         },
         {
             "type": "vcs",
-            "url": "git@github.com:oranfry\/jars-core.git"
+            "url": "https:\/\/github.com\/oranfry\/jars-core.git"
         },
         {
             "type": "vcs",
-            "url": "git@github.com:oranfry\/obex.git"
+            "url": "https:\/\/github.com\/oranfry\/obex.git"
         },
         {
             "type": "vcs",
-            "url": "git@github.com:oranfry\/subsimple.git"
+            "url": "https:\/\/github.com\/oranfry\/subsimple.git"
         }
     ],
     "require": {
