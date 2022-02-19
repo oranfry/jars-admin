@@ -10,9 +10,6 @@
     <?php require search_plugins('src/php/partial/content/' . (defined('VIEW') ? VIEW : PAGE) . '.php'); ?>
 
     <?php if ($jars->token()): ?>
-        <?php $username = $jars->token_username($jars->token()); ?>
-        <?php $user = $jars->token_user($jars->token()); ?>
-
         <script>
             window.orig_token = '<?= $jars->token() ?>';
 

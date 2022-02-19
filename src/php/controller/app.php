@@ -2,9 +2,15 @@
 
 use subsimple\Config;
 use jars\Jars;
+use jars\client\HttpClient;
 
 $jars_config = Config::get()->jars;
-$jars = new Jars($jars_config->portal_home, $jars_config->db_home);
+
+if (@$jars_config->portal_home) {
+    $jars = Jars::of($jars_config->portal_home, $jars_config->db_home);
+} else {
+    $jars = HttpClient::of($jars_config->jars_url);
+}
 
 $token = null;
 
@@ -25,14 +31,18 @@ switch (AUTHSCHEME) {
 }
 
 if (in_array(AUTHSCHEME, ['header', 'cookie'])) {
-    if (!$token || !$jars->verify_token($token)) {
-        setcookie('token', '', time() - 3600);
+    if (!$token) {
         header('Location: /');
-
         die();
     }
 
     $jars->token($token);
+
+    if (!$jars->touch()) {
+        setcookie('token', '', time() - 3600);
+        header('Location: /');
+        die();
+    }
 }
 
 return compact('jars');

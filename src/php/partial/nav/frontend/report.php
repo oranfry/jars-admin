@@ -8,8 +8,8 @@
     <div class="inline-rel">
         <div class="inline-modal listable">
             <div class="inline-dropdown">
-                <?php foreach (array_keys($reports) as $report) : ?>
-                    <a href="/report/<?= $report ?><?= $query ?>" <?= REPORT_NAME == $report ? 'class="current"' : '' ?>><?= $report ?></a>
+                <?php foreach ($reports as $report) : ?>
+                    <a href="/report/<?= $report->name ?><?= $query ?>" <?= REPORT_NAME == $report->name ? 'class="current"' : '' ?>><?= $report->name ?></a>
                 <?php endforeach ?>
             </div>
         </div>

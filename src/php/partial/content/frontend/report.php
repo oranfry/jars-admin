@@ -2,12 +2,12 @@
 <div class="sidebar" id="sidebar">
     <h3>reports</h3>
     <nav>
-        <?php foreach (array_keys($reports) as $report_name): ?>
+        <?php foreach ($reports as $report): ?>
 
             <a
-                href="/report/<?= $report_name ?>"
-                <?php if (PAGE == 'frontend/report' && REPORT_NAME == $report_name): ?>class="current"<?php endif ?>
-            ><?php echo $report_name ?></a>
+                href="/report/<?= $report->name ?>"
+                <?php if (PAGE == 'frontend/report' && REPORT_NAME == $report->name): ?>class="current"<?php endif ?>
+            ><?php echo $report->name ?></a>
 
         <?php endforeach ?>
     </nav>
@@ -70,8 +70,8 @@
                                 <p><?= @$line->type ?: '&nbsp;' ?></p>
                                 <span style="display: none;">
                                     <?php if ($linetype = Obex::find($linetypes, 'name', 'is', @$line->type)): ?>
-                                        <?php foreach (array_merge(['id'], $linetype->parent_fields, array_keys($linetype->fields), array_keys($linetype->borrow)) as $name): ?>
-                                            <input type="hidden" name="<?= $name ?>" value="<?= htmlspecialchars(@$line->{$name}) ?>">
+                                        <?php foreach ($linetype->fields as $field): ?>
+                                            <input type="hidden" name="<?= $field->name ?>" value="<?= htmlspecialchars(@$line->{$field->name}) ?>">
                                         <?php endforeach ?>
                                     <?php endif ?>
                                     <pre class="raw"><?= htmlspecialchars(json_encode($line, JSON_PRETTY_PRINT)) ?></pre>
@@ -109,41 +109,20 @@
                             <h3><?= $linetype->name ?></h3>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-row__label">id</div>
-                        <div class="form-row__value">
-                            <?php $name = 'id'; ?>
-                            <?php unset($options); ?>
-                            <?php require search_plugins("src/php/partial/fieldtype/string.php"); ?>
-                        </div>
-                        <div style="clear: both"></div>
-                    </div>
 
                     <?php
-                        $options = null;
-
-                        foreach ($linetype->parent_fields as $name) {
-                            ?>
-                            <div class="form-row">
-                                <div class="form-row__label"><?= $name ?></div>
-                                <div class="form-row__value"><?php require search_plugins("src/php/partial/fieldtype/string.php"); ?></div>
-                                <div style="clear: both"></div>
-                            </div>
-                                <?php
-                        }
-
-                        foreach (array_merge($linetype->fields, $linetype->borrow) as $name => $fuse) {
-                            $fieldTypeObject = (new ReflectionFunction($fuse))->getReturnType();
-                            $fieldType = ($fieldTypeObject ? $fieldTypeObject->getName() : 'string');
-                            $multiline = in_array($name, $respect_newline_fields[$linetype->name]);
-                            $inc = search_plugins("src/php/partial/fieldtype/{$fieldType}.php");
+                        foreach ($linetype->fields as $field_details) {
+                            $name = $field_details->name;
+                            $multiline = $field_details->multiline;
+                            $fieldsType = $field_details->type;
+                            $inc = search_plugins("src/php/partial/fieldtype/{$fieldsType}.php");
 
                             if (!file_exists($inc)) {
-                                error_response("Unsupported field type: {$fieldType}");
+                                error_response("Unsupported field type: {$fieldsType}");
                             }
                             ?>
                             <div class="form-row">
-                                <div class="form-row__label"><?= $name ?></div>
+                                <div class="form-row__label"><?= $field_details->name ?></div>
                                 <div class="form-row__value"><?php require $inc; ?></div>
                                 <div style="clear: both"></div>
                             </div>
@@ -160,6 +139,5 @@
                 <pre class="raw"></pre>
             </div>
         <?php endforeach ?>
-
     </div>
 </div>

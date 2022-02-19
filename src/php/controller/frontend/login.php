@@ -7,19 +7,20 @@ if ($jars->token()) {
     die();
 }
 
-if (@$_COOKIE['token'] && $jars->verify_token($_COOKIE['token'])) {
-    $jars->token($_COOKIE['token']);
-    $config = $jars->config();
+if ($token = @$_COOKIE['token']) {
+    $jars->token($token);
 
-    list($first) = array_keys($config->reports);
+    if ($jars->touch()) {
+        list($first) = $jars->reports();
 
-    if (!$first) {
-        error_response($config->reports);
+        if (!$first) {
+            error_response('No reports!');
+        }
+
+        header('Location: /report/' . $first->name);
+
+        die('Redirecting...');
     }
-
-    header('Location: /report/' . $first);
-
-    die('Redirecting...');
 }
 
 return [];

@@ -16,21 +16,22 @@ if (isset($_SERVER['HTTP_HOST']) && file_exists($config_file = __DIR__ . '/confi
     }
 }
 
-$errors = [];
+if ($portal_home = @$host_config->portal_home ?? @$_SERVER['PORTAL_HOME']) {
+    if (!$db_home = @$host_config->db_home ?? @$_SERVER['DB_HOME']) {
+        error_response('When setting PORTAL_HOME, please also set DB_HOME');
+    }
 
-if (!$portal_home = @$host_config->portal_home ?? $_SERVER['PORTAL_HOME']) {
-    $errors[] = 'Unable to determine PORTAL_HOME';
-}
-
-if (!$db_home = @$host_config->db_home ?? $_SERVER['DB_HOME']) {
-    $errors[] = 'Unable to determine DB_HOME';
-}
-
-if ($errors) {
-    error_response(implode('; ', $errors));
+    $jars_config = (object) [
+        'db_home' => @$db_home,
+        'portal_home' => @$portal_home,
+    ];
+} elseif ($jars_url = @$host_config->jars_url ?? @$_SERVER['JARS_URL']) {
+    $jars_config = (object) [
+        'jars_url' => @$jars_url,
+    ];
+} else {
+    error_response('Please define PORTAL_HOME home or JARS_URL');
 }
 
 require APP_HOME . '/vendor/autoload.php';
-require $portal_home . '/vendor/autoload.php';
-
 require SUBSIMPLE_HOME . '/subsimple.php';

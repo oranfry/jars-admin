@@ -17,5 +17,7 @@ if (!$token) {
 }
 
 return [
-    'data' => (object) ['token' => $token],
+    'data' => (object) [
+        'token' => $token,
+    ],
 ];
