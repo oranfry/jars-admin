@@ -1,7 +1,7 @@
 <?php
 
-with_plugins(function($pdir, $name) use ($latests){
-    $dir = "{$pdir}/src/icon";
+with_plugins(function($pdir, $name) use ($latests) {
+    $dir = $pdir . '/src/icon';
 
     if (!is_dir($dir)) {
         return;

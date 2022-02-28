@@ -6,7 +6,7 @@
 
             <a
                 href="/report/<?= $report->name ?>"
-                <?php if (PAGE == 'frontend/report' && REPORT_NAME == $report->name): ?>class="current"<?php endif ?>
+                <?php if (PAGE == 'jars/admin/frontend/report' && REPORT_NAME == $report->name): ?>class="current"<?php endif ?>
             ><?php echo $report->name ?></a>
 
         <?php endforeach ?>
@@ -18,7 +18,7 @@
 
             <a
                 href="/report/<?= REPORT_NAME ?>/<?= $group_name ?>"
-                <?php if (PAGE == 'frontend/report' && GROUP_NAME == $group_name): ?>class="current"<?php endif ?>
+                <?php if (PAGE == 'jars/admin/frontend/report' && GROUP_NAME == $group_name): ?>class="current"<?php endif ?>
             ><?php echo $group_name ?></a>
 
         <?php endforeach ?>
