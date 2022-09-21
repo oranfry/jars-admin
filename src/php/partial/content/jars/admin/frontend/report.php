@@ -59,19 +59,18 @@
                         >
                             <td class="select-column printhide"><input type="checkbox"></td>
                             <?php foreach ($fields as $field): ?>
-                                <?php $value = @$line->{$field->name}; ?>
                                 <td
                                     class="list-value"
                                     data-name="<?= $field->name ?>"
                                     style="max-width: <?= bcdiv(90, count($fields), 2) ?>%; <?php if ($field->type == 'number'): ?>text-align: right;<?php endif ?>"
-                                ><?= htmlspecialchars($value) ?></td>
+                                ><?= htmlspecialchars($line->{$field->name} ?? '') ?></td>
                             <?php endforeach ?>
                             <td class="extend">
                                 <p><?= @$line->type ?: '&nbsp;' ?></p>
                                 <span style="display: none;">
                                     <?php if ($linetype = Obex::find($linetypes, 'name', 'is', @$line->type)): ?>
                                         <?php foreach ($linetype->fields as $field): ?>
-                                            <input type="hidden" name="<?= $field->name ?>" value="<?= htmlspecialchars(@$line->{$field->name}) ?>">
+                                            <input type="hidden" name="<?= $field->name ?>" value="<?= htmlspecialchars($line->{$field->name} ?? '') ?>">
                                         <?php endforeach ?>
                                     <?php endif ?>
                                     <pre class="raw"><?= htmlspecialchars(json_encode($line, JSON_PRETTY_PRINT)) ?></pre>
