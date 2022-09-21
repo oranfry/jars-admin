@@ -1,1 +1,1 @@
-/home/oran/Unsynched/dev/oranfry/jars-admin/src/php/error/jars/admin/main.php
+main.php
