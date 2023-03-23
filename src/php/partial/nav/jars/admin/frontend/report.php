@@ -1,5 +1,5 @@
 <?php
-    $query = implode('&', array_map(function($v, $k) { return "{$k}={$v}"; }, $_GET, array_keys($_GET)));
+    $query = implode('&', array_map(function($v, $k) { return "$k=$v"; }, $_GET, array_keys($_GET)));
     $query = $query ? '?' . $query : '';
 ?>
 [<?= REPORT_NAME ?>]<br>

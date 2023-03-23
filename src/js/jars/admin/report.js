@@ -201,3 +201,10 @@ $(document).ready(function() {
         window.history.pushState({}, document.title, window.location.href.split('?')[0]);
     }
 });
+
+var onResize = function () {
+    $('.sidebar').css('height', $(document).height() + 'px');
+};
+
+$(document).on('resize', onResize);
+onResize();
