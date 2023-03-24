@@ -138,7 +138,17 @@
                         <br>
                     </div>
                 </form>
-                <textarea class="raw"></textarea>
+                <form method="post">
+                    <div>
+                        <textarea name="raw" class="raw"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-row__label">&nbsp;</div>
+                        <div class="form-row__value"><button class="savelineraw button button--main" type="button">Save</button> <button class="deleteline button button--main" type="button">Delete</button></div>
+                        <div style="clear: both"></div>
+                        <br>
+                    </div>
+                </form>
             </div>
         <?php endforeach ?>
     </div>

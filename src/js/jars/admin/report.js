@@ -59,7 +59,7 @@ window.selectOneLine = function() {
         }
     }
 
-    $line.find('.raw').html($linerow.find('.raw').html());
+    $line.find('.raw').val($linerow.find('.raw').html());
 };
 
 window.selectEmptyLine = function() {
@@ -149,6 +149,48 @@ $('.edit-form .saveline').on('click', function(e) {
         };
 
         reader.readAsBinaryString(file);
+    });
+});
+
+$('.edit-form .savelineraw').on('click', function(e) {
+    e.preventDefault();
+    var data;
+
+    try {
+        data = JSON.parse($(this).closest('form').find('[name="raw"]').val());
+    } catch(e) {
+        alert(e);
+
+        return;
+    }
+
+    if (typeof data === 'object') {
+        data = [data];
+    }
+
+    if (data.constructor !== Array) {
+        alert('Please provide an object or array thereof!');
+
+        return;
+    }
+
+    $.ajax('/ajax/save', {
+        method: 'post',
+        contentType: false,
+        processData: false,
+        data: JSON.stringify(data),
+        success: function(response, status, request) {
+            if ('URLSearchParams' in window) {
+                var searchParams = new URLSearchParams(window.location.search);
+                searchParams.set("version", request.getResponseHeader('X-Version'));
+                window.location.search = searchParams.toString();
+            } else {
+                window.location.reload();
+            }
+        },
+        error: function(data){
+            alert(data.responseJSON.error);
+        }
     });
 });
 
