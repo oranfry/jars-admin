@@ -164,14 +164,14 @@ $('.edit-form .savelineraw').on('click', function(e) {
         return;
     }
 
-    if (typeof data === 'object') {
-        data = [data];
-    }
-
     if (data.constructor !== Array) {
-        alert('Please provide an object or array thereof!');
+        if (typeof data === 'object') {
+            data = [data];
+        } else {
+            alert('Please provide an object or array thereof!');
 
-        return;
+            return;
+        }
     }
 
     $.ajax('/ajax/save', {
