@@ -59,7 +59,7 @@ window.selectOneLine = function() {
         }
     }
 
-    $line.find('.raw').val($linerow.find('.raw').html());
+    $line.find('.raw').val($linerow.find('.raw').val());
 };
 
 window.selectEmptyLine = function() {
