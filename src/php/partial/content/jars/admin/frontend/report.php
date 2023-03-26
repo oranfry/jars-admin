@@ -20,7 +20,7 @@
                 <a
                     href="/report/<?= REPORT_NAME ?>/<?= $group_name ?>"
                     <?php if (PAGE == 'jars/admin/frontend/report' && GROUP_NAME == $group_name): ?>class="current"<?php endif ?>
-                ><?php echo $group_name ?></a>
+                ><?= $group_name ?></a>
 
             <?php endforeach ?>
         </nav>
