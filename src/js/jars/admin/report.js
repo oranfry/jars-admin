@@ -244,9 +244,67 @@ $(document).ready(function() {
     }
 });
 
-var onResize = function () {
-    $('.sidebar').css('height', $(document).height() + 'px');
+window.isOverflowingX = function(el) {
+    var curOverflow = el.style.overflowX;
+
+    if (!curOverflow || curOverflow === "visible") {
+        el.style.overflowX = "hidden";
+    }
+
+    var result = el.clientWidth < el.scrollWidth;
+
+    el.style.overflowX = curOverflow;
+
+    return result;
 };
 
-$(document).on('resize', onResize);
+var onResize = function () {
+    if (typeof sidebarWidth == 'undefined') {
+        window.sidebarWidth = 0;
+
+        $('.sidebar').each(function() {
+            var maxwidth = 600;
+            var minwidth = 100;
+            var margin = 20;
+
+            var steps = [100, 10, 1];
+            var prev = maxwidth + steps[0] - margin;
+            var sidebar = this;
+
+            steps.forEach(function(step) {
+                for (var w = prev - step; w >= minwidth - margin; w = w - step) {
+                    $(sidebar).css('width', w + 'px');
+
+                    if (isOverflowingX(sidebar)) {
+                        break;
+                    }
+
+                    prev = w;
+                }
+            });
+
+            let width = prev + margin;
+
+            $(sidebar).css({
+                'width': width + 'px',
+                'left': window.sidebarWidth + 'px'
+            });
+
+            window.sidebarWidth += width;
+        });
+    }
+
+    var cursor = window.sidebarWidth;
+    var $areas = $('.area');
+    var areaWidth = Math.floor(($(window).width() - window.sidebarWidth) / $areas.length);
+
+    $areas
+        .css('width', areaWidth + 'px')
+        .each(function() {
+            $(this).css('left', cursor + 'px');
+            cursor = cursor + areaWidth;
+        });
+};
+
+$(window).on('resize', onResize);
 onResize();

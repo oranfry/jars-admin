@@ -9,7 +9,7 @@ nav a {
 }
 
 .sidebar h3, nav a {
-    padding: 6px 2em;
+    padding: 6px 1em;
 }
 
 nav a.current {

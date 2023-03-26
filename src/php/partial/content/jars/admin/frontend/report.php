@@ -10,6 +10,9 @@
 
         <?php endforeach ?>
     </nav>
+</div>
+
+<div class="sidebar" id="sidebar">
     <br>
     <nav>
         <?php foreach ($groups as $group_name): ?>
@@ -22,7 +25,7 @@
     </nav>
 </div>
 
-<div class="list-area" id="list-area">
+<div class="area list-area" id="list-area">
     <?php if (count(@$warnings ?: [])): ?>
         <div class="warnings">
             <?php foreach ($warnings as $warning): ?>
@@ -99,7 +102,7 @@
 </div>
 
 <?php if (@$linetypes): ?>
-    <div class="editor-area" id="editor-area">
+    <div class="area editor-area" id="editor-area">
         <?php foreach ($linetypes as $linetype): ?>
             <div data-type="<?php echo $linetype->name ?>" class="line floatline edit-form" style="display: none">
                 <?php $value = null; ?>
