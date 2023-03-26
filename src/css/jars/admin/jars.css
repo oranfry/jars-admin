@@ -61,6 +61,13 @@ body.centered {
     color: white;
 }
 
+.sidebar::-webkit-scrollbar, .area::-webkit-scrollbar {
+    display: none;
+}
+.sidebar, .area {
+   scrollbar-width: none;
+}
+
 .raw {
     padding: 1em;
     background: white;
