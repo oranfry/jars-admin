@@ -74,7 +74,7 @@
                                 <?php endif ?>
                                 <br>
                                 <br>
-                                <textarea class="raw"><?= str_replace(['"', "'", '<', '>'], ['&quot;', '&#039;', '&lt;', '&gt;'], json_encode($line, JSON_PRETTY_PRINT)) ?></textarea>
+                                <textarea class="raw"><?= htmlspecialchars(json_encode($line, JSON_PRETTY_PRINT)) ?></textarea>
                             </span>
                         </td>
                     </tr>
@@ -86,7 +86,7 @@
     <?php endif ?>
 
     <?php if (isset($data)): ?>
-        <textarea class="raw"><?= str_replace(['"', "'", '<', '>'], ['&quot;', '&#039;', '&lt;', '&gt;'], json_encode($data, JSON_PRETTY_PRINT)) ?></textarea>
+        <textarea class="raw"><?= htmlspecialchars(json_encode($data, JSON_PRETTY_PRINT)) ?></textarea>
     <?php endif ?>
 
 
