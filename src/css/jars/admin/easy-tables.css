@@ -1,13 +1,29 @@
 .easy-table {
-    border-collapse: collapse;
+    display: table;
     margin-bottom: 1em;
 }
 
-.easy-table td, .easy-table th {
-    vertical-align: top;
+.easy-table .easy-table__row {
+    display: table-row;
     text-align: left;
-    padding: 0.35em 0.6em;
+}
+
+.easy-table .easy-table__row.easy-table__row--header {
+    background: #ddd;
+    font-weight: bold;
+}
+
+.easy-table .easy-table__row .easy-table__cell {
+    display: table-cell;
+    padding: 0.5em 0.6em;
     border-bottom: 1px solid #ccc;
+}
+
+.easy-table .easy-table__row .easy-table__cell .limitedwidth {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    white-space: nowrap;
 }
 
 .easy-table th:first-child, .easy-table td:first-child, .easy-table td.first-child {
@@ -27,7 +43,7 @@
 }
 
 .easy-table thead tr {
-    background-color: #ddd;
+    background-color: #eee;
 }
 
 .easy-subtables thead {
@@ -53,7 +69,7 @@
     background-color: #ffe2cd;
 }
 
-.easy-table td:not(.extend) {
+.easy-table .easy-table__cell:not(.extend) {
     cursor: default;
     white-space: nowrap;
     overflow: hidden;
@@ -89,17 +105,8 @@
     background-color: #ddd;
 }
 
-.easy-table td.extend, .easy-table th.extend {
-    display: table;
-    table-layout: fixed;
-    width: 100%
-}
-
-.easy-table td.extend p, .easy-table th.extend p {
+.easy-table .extend p {
     opacity: 25%;
-    padding-top: 0.35em;
-    padding-bottom: 0.35em;
-    padding-right: 1em;
     text-align: right;
 }
 

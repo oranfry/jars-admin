@@ -60,6 +60,7 @@ window.selectOneLine = function() {
     }
 
     $line.find('.raw').val($linerow.find('.raw').val());
+    window.jarsOnResize();
 };
 
 window.selectEmptyLine = function() {
@@ -73,7 +74,7 @@ window.selectEmptyLine = function() {
 
     $line.show();
     $('.line').not($line).hide();
-
+    window.jarsOnResize();
 };
 
 $('.linerow').on('click', selectOneLine);
@@ -258,53 +259,57 @@ window.isOverflowingX = function(el) {
     return result;
 };
 
-var onResize = function () {
-    if (typeof sidebarWidth == 'undefined') {
-        window.sidebarWidth = 0;
+window.jarsOnResize = function () {
+    $('body').css('height', Math.max($(document).height(), $(window).height()) + 'px');
 
-        $('.sidebar').each(function() {
-            var maxwidth = 600;
-            var minwidth = 100;
-            var margin = 20;
+    var allocatedWidth = 0;
 
-            var steps = [100, 10, 1];
-            var prev = maxwidth + steps[0] - margin;
-            var sidebar = this;
+    widths = [];
 
-            steps.forEach(function(step) {
-                for (var w = prev - step; w >= minwidth - margin; w = w - step) {
-                    $(sidebar).css('width', w + 'px');
+    var $areas = $('.sidebar, .area');
 
-                    if (isOverflowingX(sidebar)) {
-                        break;
-                    }
+    $areas.each(function() {
+        var maxwidth = 3920;
+        var minwidth = 0;
+        var margin;
+        margin = $(this).data('area-margin') || 0;
+        var steps = [100, 10, 1];
+        var prev = maxwidth + steps[0] - margin;
+        var area = this;
 
-                    prev = w;
+        steps.forEach(function(step) {
+            for (var w = prev - step; w >= minwidth - margin; w = w - step) {
+                $(area).css('width', w + 'px');
+
+                if (isOverflowingX(area)) {
+                    break;
                 }
-            });
 
-            let width = prev + margin;
-
-            $(sidebar).css({
-                'width': width + 'px',
-                'left': window.sidebarWidth + 'px'
-            });
-
-            window.sidebarWidth += width;
+                prev = w;
+            }
         });
-    }
 
-    var cursor = window.sidebarWidth;
-    var $areas = $('.area');
-    var areaWidth = Math.floor(($(window).width() - window.sidebarWidth) / $areas.length);
+        let width = prev + margin;
 
-    $areas
-        .css('width', areaWidth + 'px')
-        .each(function() {
-            $(this).css('left', cursor + 'px');
-            cursor = cursor + areaWidth;
+        allocatedWidth = (widths.reduce((c, w) => c + w, 0));
+
+        $(area).css({
+            'width': width + 'px',
+            'left': allocatedWidth + 'px'
         });
+
+        widths.push(width);
+    });
+
+    var rem = Math.max(0, $(window).width() - allocatedWidth);
+
+    $areas.last().css('width', rem + 'px');
+
+    $('.raw.fullarea').css({
+        'height': Math.max($(document).height(), $(window).height()) + 'px',
+        'width': rem + 'px',
+    });
 };
 
-$(window).on('resize', onResize);
-onResize();
+$(window).on('resize', jarsOnResize);
+jarsOnResize();

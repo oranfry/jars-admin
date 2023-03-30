@@ -1,6 +1,5 @@
 <?php use obex\Obex; ?>
-<div class="sidebar" id="sidebar">
-    <br>
+<div class="sidebar" id="sidebar" data-area-margin="15">
     <nav>
         <?php foreach ($reports as $report): ?>
             <a
@@ -13,8 +12,7 @@
 </div>
 
 <?php if (count($groups) > 1 || count($groups) && reset($groups) !== 'all'): ?>
-    <div class="sidebar" id="sidebar">
-        <br>
+    <div class="sidebar" id="sidebar" data-area-margin="15">
         <nav>
             <?php foreach ($groups as $group_name): ?>
                 <a
@@ -37,56 +35,50 @@
     <?php endif ?>
 
     <?php if (isset($lines)): ?>
-        <table class="easy-table">
-            <thead>
-                <tr>
-                    <th class="select-column printhide"><i class="icon icon--gray icon--smalldot-o selectall"></i></td></th>
-                    <?php foreach ($fields as $field): ?>
-                        <th
-                            class="<?= $field->type == 'number' ? 'right' : '' ?>"
-                        ><?= $field->name ?></th>
-                    <?php endforeach ?>
-                    <th class="extend"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($lines as $i => $line): ?>
-                    <tr
-                        class="linerow"
-                        <?php if (@$line->id): ?>data-id="<?= $line->id ?>"<?php endif ?>
-                        <?php if (@$line->type) : ?>data-type="<?= $line->type ?>"<?php endif ?>
-                    >
-                        <td class="select-column printhide"><input type="checkbox"></td>
-                        <?php foreach ($fields as $field): ?>
-                            <td
-                                class="list-value"
-                                data-name="<?= $field->name ?>"
-                                style="max-width: <?= bcdiv(90, count($fields), 2) ?>%; <?php if ($field->type == 'number'): ?>text-align: right;<?php endif ?>"
-                            ><?= htmlspecialchars($line->{$field->name} ?? '') ?></td>
-                        <?php endforeach ?>
-                        <td class="extend">
-                            <p><?= @$line->type ?: '&nbsp;' ?></p>
-                            <span style="display: none;">
-                                <?php if ($linetype = Obex::find($linetypes, 'name', 'is', @$line->type)): ?>
-                                    <?php foreach ($linetype->fields as $field): ?>
-                                        <input type="hidden" name="<?= $field->name ?>" value="<?= htmlspecialchars($line->{$field->name} ?? '') ?>">
-                                    <?php endforeach ?>
-                                <?php endif ?>
-                                <br>
-                                <br>
-                                <textarea class="raw"><?= htmlspecialchars(json_encode($line, JSON_PRETTY_PRINT)) ?></textarea>
-                            </span>
-                        </td>
-                    </tr>
+        <div class="easy-table">
+            <div class="easy-table__row easy-table__row--header">
+                <div class="easy-table__cell" class="select-column printhide"><i class="icon icon--gray icon--smalldot-o selectall"></i></div>
+                <?php foreach ($fields as $field): ?>
+                    <div class="easy-table__cell <?= $field->type == 'number' ? 'easy-table__cell--right' : '' ?>"><?= $field->name ?></div>
                 <?php endforeach ?>
-            </tbody>
-        </table>
+                <div class="easy-table__cell" class="extend"></div>
+            </div>
+            <?php foreach ($lines as $i => $line): ?>
+                <div
+                    class="easy-table__row linerow"
+                    <?php if (@$line->id): ?>data-id="<?= $line->id ?>"<?php endif ?>
+                    <?php if (@$line->type) : ?>data-type="<?= $line->type ?>"<?php endif ?>
+                >
+                    <div class="easy-table__cell select-column printhide"><input type="checkbox"></div>
+                    <?php foreach ($fields as $field): ?>
+                        <div
+                            class="easy-table__cell list-value"
+                            data-name="<?= $field->name ?>"
+                            style="max-width: <?= bcdiv(90, count($fields), 2) ?>%; <?php if ($field->type == 'number'): ?>text-align: right;<?php endif ?>"
+                        ><div class="limitedwidth"><?= htmlspecialchars($line->{$field->name} ?? '') ?></div></div>
+                    <?php endforeach ?>
+                    <div class="easy-table__cell extend">
+                        <p><?= @$line->type ?: '&nbsp;' ?></p>
+                        <span style="display: none;">
+                            <?php if ($linetype = Obex::find($linetypes, 'name', 'is', @$line->type)): ?>
+                                <?php foreach ($linetype->fields as $field): ?>
+                                    <input type="hidden" name="<?= $field->name ?>" value="<?= htmlspecialchars($line->{$field->name} ?? '') ?>">
+                                <?php endforeach ?>
+                            <?php endif ?>
+                            <br>
+                            <br>
+                            <textarea class="raw"><?= htmlspecialchars(json_encode($line, JSON_PRETTY_PRINT)) ?></textarea>
+                        </span>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        </div>
 
         <div style="text-align:center; color: #999;"><br><?= count($lines); ?> lines</div>
     <?php endif ?>
 
     <?php if (isset($data)): ?>
-        <textarea class="raw"><?= htmlspecialchars(json_encode($data, JSON_PRETTY_PRINT)) ?></textarea>
+        <textarea class="raw fullarea"><?= htmlspecialchars(json_encode($data, JSON_PRETTY_PRINT)) ?></textarea>
     <?php endif ?>
 
 
@@ -97,7 +89,7 @@
                     href="#"
                     class="trigger-add-line"
                     data-type="<?= $linetype->name ?>"
-                ><i class="icon icon--gray icon--plus"></i> <?= $linetype->name ?></a>
+                >+ <?= $linetype->name ?></a>
             <?php endforeach ?>
         </nav>
     <?php endif ?>
@@ -105,56 +97,58 @@
 
 <?php if (@$linetypes): ?>
     <div class="area editor-area" id="editor-area">
-        <?php foreach ($linetypes as $linetype): ?>
-            <div data-type="<?php echo $linetype->name ?>" class="line floatline edit-form" style="display: none">
-                <?php $value = null; ?>
-                <form method="post">
-                    <div class="form-row">
-                        <div class="form-row__label">&nbsp;</div>
-                        <div class="form-row__value">
-                            <h3><?= $linetype->name ?></h3>
-                        </div>
-                    </div>
-
-                    <?php
-                        foreach ($linetype->fields as $field_details) {
-                            $name = $field_details->name;
-                            $multiline = $field_details->multiline;
-                            $fieldsType = $field_details->type;
-                            $inc = search_plugins("src/php/partial/fieldtype/{$fieldsType}.php");
-
-                            if (!file_exists($inc)) {
-                                error_response("Unsupported field type: {$fieldsType}");
-                            }
-                            ?>
-                            <div class="form-row">
-                                <div class="form-row__label"><?= $field_details->name ?></div>
-                                <div class="form-row__value"><?php require $inc; ?></div>
-                                <div style="clear: both"></div>
+        <div style="max-width: 600px; min-width: 200px">
+            <?php foreach ($linetypes as $linetype): ?>
+                <div data-type="<?php echo $linetype->name ?>" class="line floatline edit-form" style="display: none">
+                    <?php $value = null; ?>
+                    <form method="post">
+                        <div class="form-row">
+                            <div class="form-row__label">&nbsp;</div>
+                            <div class="form-row__value">
+                                <h3><?= $linetype->name ?></h3>
                             </div>
-                            <?php
-                        }
-                    ?>
+                        </div>
 
-                    <div class="form-row">
-                        <div class="form-row__label">&nbsp;</div>
-                        <div class="form-row__value"><button class="saveline button button--main" type="button">Save</button> <button class="deleteline button button--main" type="button">Delete</button></div>
-                        <div style="clear: both"></div>
-                        <br>
-                    </div>
-                </form>
-                <form method="post">
-                    <div>
-                        <textarea name="raw" class="raw"></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-row__label">&nbsp;</div>
-                        <div class="form-row__value"><button class="savelineraw button button--main" type="button">Save</button> <button class="deleteline button button--main" type="button">Delete</button></div>
-                        <div style="clear: both"></div>
-                        <br>
-                    </div>
-                </form>
-            </div>
-        <?php endforeach ?>
+                        <?php
+                            foreach ($linetype->fields as $field_details) {
+                                $name = $field_details->name;
+                                $multiline = $field_details->multiline;
+                                $fieldsType = $field_details->type;
+                                $inc = search_plugins("src/php/partial/fieldtype/{$fieldsType}.php");
+
+                                if (!file_exists($inc)) {
+                                    error_response("Unsupported field type: {$fieldsType}");
+                                }
+                                ?>
+                                <div class="form-row">
+                                    <div class="form-row__label"><?= $field_details->name ?></div>
+                                    <div class="form-row__value"><?php require $inc; ?></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <?php
+                            }
+                        ?>
+
+                        <div class="form-row">
+                            <div class="form-row__label">&nbsp;</div>
+                            <div class="form-row__value"><button class="saveline button button--main" type="button">Save</button> <button class="deleteline button button--main" type="button">Delete</button></div>
+                            <div style="clear: both"></div>
+                            <br>
+                        </div>
+                    </form>
+                    <form method="post">
+                        <div>
+                            <textarea name="raw" class="raw"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-row__label">&nbsp;</div>
+                            <div class="form-row__value"><button class="savelineraw button button--main" type="button">Save</button> <button class="deleteline button button--main" type="button">Delete</button></div>
+                            <div style="clear: both"></div>
+                            <br>
+                        </div>
+                    </form>
+                </div>
+            <?php endforeach ?>
+        </div>
     </div>
 <?php endif ?>

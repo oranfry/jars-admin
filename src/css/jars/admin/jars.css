@@ -10,11 +10,12 @@ h3 {
 
 html, body {
     font-size: 15px;
+    overflow-x: auto;
 }
 
 html {
     min-height: 100%;
-    font-family: Helvetica;
+    font-family: Sans-serif;
 }
 
 body.centered {
@@ -36,6 +37,7 @@ body.centered {
 
 .area {
     position: relative;
+    overflow: hidden;
 }
 
 .area + .area, .sidebar {
@@ -43,7 +45,7 @@ body.centered {
     top: 0;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 99vh;
+    height: 100vh;
     z-index: 10;
 }
 
@@ -54,7 +56,7 @@ body.centered {
 
 .sidebar {
     background-color: #555;
-    border-right: 3px solid #333;
+    border-right: 2px solid #333;
 }
 
 .sidebar, .sidebar a {
@@ -64,18 +66,28 @@ body.centered {
 .sidebar::-webkit-scrollbar, .area::-webkit-scrollbar {
     display: none;
 }
+
 .sidebar, .area {
-   scrollbar-width: none;
+    width: -moz-fit-content;
+    width: fit-content;
+    scrollbar-width: none;
 }
 
 .raw {
     padding: 1em;
     background: white;
-    border: #999;
+}
+
+.raw:not(.fullarea) {
+    border: #999 1px solid;
     margin: 0 2em;
 }
 
-textarea.raw {
+textarea.raw:not(.fullarea) {
     width: 90%;
     height: 20em;
+}
+
+textarea.raw.fullarea {
+    border: none;
 }

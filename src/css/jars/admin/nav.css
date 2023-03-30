@@ -1,3 +1,4 @@
+
 .sidebar h3 + nav {
     margin-top: 0;
 }
@@ -10,10 +11,18 @@ nav a {
 }
 
 .sidebar h3, nav a {
-    padding: 6px 1em;
+    padding: 6px 15px;
+}
+
+.sidebar h3:first-child, nav a:first-child {
+    margin-top: 12px;
+}
+
+.sidebar h3:last-child, nav a:last-child {
+    margin-bottom: 12px;
 }
 
 nav a.current {
-    background-color: #eee;
+    background-color: white;
     color: #333;
 }
