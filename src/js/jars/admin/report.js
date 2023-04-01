@@ -262,17 +262,15 @@ window.isOverflowingX = function(el) {
 window.jarsOnResize = function () {
     $('body').css('height', Math.max($(document).height(), $(window).height()) + 'px');
 
-    var allocatedWidth = 0;
-
-    widths = [];
-
+    var widths = [];
+    var maxwidths = [];
+    var margins = [];
     var $areas = $('.sidebar, .area');
 
     $areas.each(function() {
         var maxwidth = 3920;
         var minwidth = 0;
-        var margin;
-        margin = $(this).data('area-margin') || 0;
+        var margin = $(this).data('area-margin') || 0;
         var steps = [100, 10, 1];
         var prev = maxwidth + steps[0] - margin;
         var area = this;
@@ -291,23 +289,65 @@ window.jarsOnResize = function () {
 
         let width = prev + margin;
 
-        allocatedWidth = (widths.reduce((c, w) => c + w, 0));
-
         $(area).css({
+            'width': width + 'px',
+            'left': widths.reduce((c, w) => c + w, 0) + 'px'
+        });
+
+        widths.push(width);
+        maxwidths.push($(this).data('area-maxwidth'));
+        margins.push(margin);
+    });
+
+    var targetwidth = $(window).width();
+    var allocatedWidth = widths.reduce((c, w) => c + w, 0);
+    var allocatedFixedWidth = 0;
+
+    for (var i = 0; i < widths.length; i++) {
+        if (maxwidths[i]) {
+            var width = Math.max(widths[i], Math.min(maxwidths[i], widths[i] * targetwidth / allocatedWidth));
+            allocatedFixedWidth += width;
+            widths[i] = width;
+            console.log('fixed', i, maxwidths[i], width, allocatedFixedWidth);
+        }
+    }
+
+    var targetFluidWidth = targetwidth - allocatedFixedWidth;
+    var allocatedFluidWidth = 0;
+
+    for (var i = 0; i < widths.length; i++) {
+        if (!maxwidths[i]) {
+            allocatedFluidWidth += widths[i];
+        }
+    }
+
+    for (var i = 0; i < widths.length; i++) {
+        if (!maxwidths[i]) {
+            var width = Math.floor(widths[i] * targetFluidWidth / allocatedFluidWidth);
+            widths[i] = width;
+            console.log('fluid', i, width);
+        }
+    }
+
+    var rem = targetwidth - widths.reduce((c, w) => c + w, 0);
+
+    while (rem > 0) {
+        for (var i = widths.length - 1; rem > 0&& i >= 0; i--) {
+            widths[i]++;
+            rem--;
+        }
+    }
+
+    var allocatedWidth = 0;
+
+    $areas.each(function() {
+        var width = widths.shift();
+        $(this).css({
             'width': width + 'px',
             'left': allocatedWidth + 'px'
         });
 
-        widths.push(width);
-    });
-
-    var rem = Math.max(0, $(window).width() - allocatedWidth);
-
-    $areas.last().css('width', rem + 'px');
-
-    $('.raw.fullarea').css({
-        'height': Math.max($(document).height(), $(window).height()) + 'px',
-        'width': rem + 'px',
+        allocatedWidth += width;
     });
 };
 

@@ -22,7 +22,7 @@
 .easy-table .easy-table__row .easy-table__cell .limitedwidth {
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 150px;
+    max-width: 500px;
     white-space: nowrap;
 }
 
