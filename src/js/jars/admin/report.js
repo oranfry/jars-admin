@@ -331,8 +331,8 @@ window.jarsOnResize = function () {
 
     var rem = targetwidth - widths.reduce((c, w) => c + w, 0);
 
-    while (rem > 0) {
-        for (var i = widths.length - 1; rem > 0&& i >= 0; i--) {
+    while (widths.length && rem > 0) {
+        for (var i = widths.length - 1; rem > 0 && i >= 0; i--) {
             widths[i]++;
             rem--;
         }
