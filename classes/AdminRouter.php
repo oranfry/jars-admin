@@ -9,13 +9,13 @@ class AdminRouter extends \subsimple\Router
 
         'POST /ajax/login' => [
             'AUTHSCHEME' => 'none',
-            'LAYOUT' => 'jars/admin/json',
+            'LAYOUT' => 'json',
             'PAGE' => 'jars/admin/ajax/login',
         ],
 
         'POST /ajax/save' => [
             'AUTHSCHEME' => 'cookie',
-            'LAYOUT' => 'jars/admin/json',
+            'LAYOUT' => 'json',
             'PAGE' => 'jars/admin/ajax/save',
         ],
 
