@@ -308,7 +308,6 @@ window.jarsOnResize = function () {
             var width = Math.max(widths[i], Math.min(maxwidths[i], widths[i] * targetwidth / allocatedWidth));
             allocatedFixedWidth += width;
             widths[i] = width;
-            console.log('fixed', i, maxwidths[i], width, allocatedFixedWidth);
         }
     }
 
@@ -325,7 +324,6 @@ window.jarsOnResize = function () {
         if (!maxwidths[i]) {
             var width = Math.floor(widths[i] * targetFluidWidth / allocatedFluidWidth);
             widths[i] = width;
-            console.log('fluid', i, width);
         }
     }
 
