@@ -1,0 +1,8 @@
+[
+    "src/css/jars/admin/jars.css",
+    "src/css/jars/admin/nav.css",
+    "src/css/jars/admin/forms.css",
+    "src/css/jars/admin/easy-tables.css",
+    "src/css/jars/admin/icon.css",
+    "php:src/php/script/jars/admin/iconcss.php"
+]
