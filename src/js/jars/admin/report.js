@@ -3,7 +3,7 @@ window.clearInputs = function() {
         var $controls = $(this).closest('.file-field-controls');
         var $actions = $controls.find('.file-field-controls__actions');
         var $inputs = $controls.find('.file-field-controls__input');
-        var $downloadlink = $controls.find('a');
+        var $downloadlink = $controls.find('.download-button');
         var $cancel = $controls.find('.file-field-controls__cancel');
 
         $actions.hide();
@@ -56,6 +56,13 @@ window.selectOneLine = function() {
             }
         } else {
             $field.val(line[_property]);
+
+            var $downloadlink = $line.find('.download-button[data-for="' + _property + '"]');
+
+            if ($downloadlink.length) {
+                var table = $downloadlink.data('table');
+                $downloadlink.attr('href', '/download/' + table + '/' + line[_property]);
+            }
         }
     }
 

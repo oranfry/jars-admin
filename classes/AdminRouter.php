@@ -51,5 +51,15 @@ class AdminRouter extends \subsimple\Router
             0 => 'REPORT_NAME',
             1 => 'GROUP_NAME',
         ],
+
+        // download
+
+        'GET /download/([a-z]+)/([a-zA-Z0-9-]+)' => [
+            'AUTHSCHEME' => 'cookie',
+            'LAYOUT' => 'jars/admin/file',
+            'PAGE' => 'jars/admin/frontend/download',
+            0 => 'TABLE_NAME',
+            1 => 'RECORD_ID',
+        ],
    ];
 }

@@ -5,12 +5,10 @@
             <a
                 href="/report/<?= $report->name ?>"
                 <?php if (PAGE == 'jars/admin/frontend/report' && REPORT_NAME == $report->name): ?>class="current"<?php endif ?>
-            ><?php echo $report->name ?></a>
-
+            ><?= $report->name ?></a>
         <?php endforeach ?>
     </nav>
 </div>
-
 <?php if (count($groups) > 1 || count($groups) && reset($groups) !== 'all'): ?>
     <div class="sidebar" id="sidebar" data-area-margin="15" data-area-maxwidth="150">
         <nav>
@@ -19,12 +17,10 @@
                     href="/report/<?= REPORT_NAME ?>/<?= $group_name ?>"
                     <?php if (PAGE == 'jars/admin/frontend/report' && GROUP_NAME == $group_name): ?>class="current"<?php endif ?>
                 ><?= $group_name ?></a>
-
             <?php endforeach ?>
         </nav>
     </div>
 <?php endif ?>
-
 <div class="area list-area" id="list-area">
     <?php if (count(@$warnings ?: [])): ?>
         <div class="warnings">
@@ -33,7 +29,6 @@
             <?php endforeach ?>
         </div>
     <?php endif ?>
-
     <?php if (isset($lines)): ?>
         <div class="easy-table" style="width: 100%">
             <div class="easy-table__row easy-table__row--header">
@@ -73,15 +68,11 @@
                 </div>
             <?php endforeach ?>
         </div>
-
-        <div style="text-align:center; color: #999;"><br><?= count($lines); ?> lines</div>
+        <div style="text-align:center; color: #999;"><br><?= count($lines) ?> lines</div>
     <?php endif ?>
-
     <?php if (isset($data)): ?>
         <textarea class="raw fullarea"><?= htmlspecialchars(json_encode($data, JSON_PRETTY_PRINT)) ?></textarea>
     <?php endif ?>
-
-
     <?php if (@$linetypes): ?>
         <nav>
             <?php foreach ($linetypes as $linetype): ?>
@@ -94,11 +85,10 @@
         </nav>
     <?php endif ?>
 </div>
-
 <?php if (@$linetypes): ?>
     <div class="area editor-area" id="editor-area">
         <?php foreach ($linetypes as $linetype): ?>
-            <div data-type="<?php echo $linetype->name ?>" class="line floatline edit-form" style="display: none">
+            <div data-type="<?= $linetype->name ?>" class="line floatline edit-form" style="display: none">
                 <?php $value = null; ?>
                 <form method="post">
                     <div class="form-row">
@@ -107,27 +97,24 @@
                             <h3><?= $linetype->name ?></h3>
                         </div>
                     </div>
-
-                    <?php
-                        foreach ($linetype->fields as $field_details) {
-                            $name = $field_details->name;
-                            $multiline = $field_details->multiline;
-                            $fieldsType = $field_details->type;
-                            $inc = search_plugins("src/php/partial/fieldtype/{$fieldsType}.php");
-
-                            if (!file_exists($inc)) {
-                                error_response("Unsupported field type: {$fieldsType}");
-                            }
-                            ?>
-                            <div class="form-row">
-                                <div class="form-row__label"><?= $field_details->name ?></div>
-                                <div class="form-row__value"><?php require $inc; ?></div>
-                                <div style="clear: both"></div>
-                            </div>
-                            <?php
-                        }
-                    ?>
-
+                    <?php foreach ($linetype->fields as $field_details) : ?>
+                        <?php $name = $field_details->name; ?>
+                        <?php $multiline = $field_details->multiline; ?>
+                        <?php $download = $field_details->downloadable ? (object) [
+                            'icon' => $field_details->download_icon,
+                            'table' => $field_details->download_table,
+                        ] : null; ?>
+                        <?php $fieldsType = $field_details->type; ?>
+                        <?php $inc = search_plugins("src/php/partial/fieldtype/{$fieldsType}.php"); ?>
+                        <?php if (!file_exists($inc)) : ?>
+                            <?php error_response("Unsupported field type: {$fieldsType}"); ?>
+                        <?php endif ?>
+                        <div class="form-row">
+                            <div class="form-row__label"><?= $field_details->name ?></div>
+                            <div class="form-row__value"><?php require $inc; ?></div>
+                            <div style="clear: both"></div>
+                        </div>
+                    <?php endforeach ?>
                     <div class="form-row">
                         <div class="form-row__label">&nbsp;</div>
                         <div class="form-row__value"><button class="saveline button button--main" type="button">Save</button> <button class="deleteline button button--main" type="button">Delete</button></div>
