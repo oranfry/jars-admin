@@ -100,7 +100,7 @@
                     <?php foreach ($linetype->fields as $field_details) : ?>
                         <?php $name = $field_details->name; ?>
                         <?php $multiline = $field_details->multiline; ?>
-                        <?php $download = $field_details->downloadable ? (object) [
+                        <?php $download = ($field_details->downloadable ?? false) ? (object) [
                             'icon' => $field_details->download_icon,
                             'table' => $field_details->download_table,
                         ] : null; ?>
