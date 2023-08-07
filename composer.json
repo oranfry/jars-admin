@@ -1,16 +1,16 @@
 {
-    "name": "oranfry\/jars-admin",
-    "version": "1.0.0",
-    "minimum-stability": "dev",
-    "require": {
-        "oranfry\/jars-client": "*",
-        "oranfry\/jars-core": "*",
-        "oranfry\/obex": "*",
-        "oranfry\/subsimple": "*"
-    },
     "autoload": {
         "psr-4": {
             "jars\\admin\\": "classes"
         }
+    },
+    "minimum-stability": "dev",
+    "name": "oranfry\/jars-admin",
+    "require": {
+        "oranfry\/jars-client": "*",
+        "oranfry\/jars-contracts": "*",
+        "oranfry\/jars-core": "*",
+        "oranfry\/obex": "*",
+        "oranfry\/subsimple": "*"
     }
 }

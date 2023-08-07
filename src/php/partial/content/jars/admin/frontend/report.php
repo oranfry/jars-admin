@@ -9,18 +9,24 @@
         <?php endforeach ?>
     </nav>
 </div>
-<?php if (count($groups) > 1 || count($groups) && reset($groups) !== 'all'): ?>
-    <div class="sidebar" id="sidebar" data-area-margin="15" data-area-maxwidth="150">
-        <nav>
-            <?php foreach ($groups as $group_name): ?>
-                <a
-                    href="/report/<?= REPORT_NAME ?>/<?= $group_name ?>"
-                    <?php if (PAGE == 'jars/admin/frontend/report' && GROUP_NAME == $group_name): ?>class="current"<?php endif ?>
-                ><?= $group_name ?></a>
-            <?php endforeach ?>
-        </nav>
-    </div>
-<?php endif ?>
+<?php $pieces = []; ?>
+<?php foreach ($groups as $i => $groupset): ?>
+    <?php $selected = preg_replace(',/$,', '', $path[$i] ?? ''); ?>
+    <?php if (count($groupset) > 1 || count($groupset) && reset($groupset) !== 'all'): ?>
+        <div class="sidebar" id="sidebar" data-area-margin="15" data-area-maxwidth="150">
+            <nav>
+                <?php foreach ($groupset as $group_name): ?>
+                    <a
+                        href="/report/<?= REPORT_NAME ?>/<?= ($prefix = implode('/', $pieces)) ? $prefix . '/' : null ?><?= $group_name ?>"
+                        <?php if ($group_name == $selected): ?>class="current"<?php endif ?>
+                    ><?= $group_name ?></a>
+                <?php endforeach ?>
+            </nav>
+        </div>
+    <?php endif ?>
+    <?php $pieces[] = $selected; ?>
+<?php endforeach ?>
+
 <div class="area list-area" id="list-area">
     <?php if (count(@$warnings ?: [])): ?>
         <div class="warnings">
@@ -62,7 +68,7 @@
                             <?php endif ?>
                             <br>
                             <br>
-                            <textarea class="raw"><?= htmlspecialchars(json_encode($line, JSON_PRETTY_PRINT)) ?></textarea>
+                            <textarea class="raw"><?= htmlspecialchars(json_encode($line, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)) ?></textarea>
                         </span>
                     </div>
                 </div>
@@ -71,7 +77,7 @@
         <div style="text-align:center; color: #999;"><br><?= count($lines) ?> lines</div>
     <?php endif ?>
     <?php if (isset($data)): ?>
-        <textarea class="raw fullarea"><?= htmlspecialchars(json_encode($data, JSON_PRETTY_PRINT)) ?></textarea>
+        <textarea class="raw fullarea"><?= htmlspecialchars(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)) ?></textarea>
     <?php endif ?>
     <?php if (@$linetypes): ?>
         <nav>

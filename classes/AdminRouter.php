@@ -2,6 +2,8 @@
 
 namespace jars\admin;
 
+use jars\contract\Constants;
+
 class AdminRouter extends \subsimple\Router
 {
     protected static $routes = [
@@ -42,9 +44,10 @@ class AdminRouter extends \subsimple\Router
             'LAYOUT' => 'jars/admin/main',
             'PAGE' => 'jars/admin/frontend/report',
             0 => 'REPORT_NAME',
+           'GROUP_NAME' => '',
         ],
 
-        'GET /report/([a-z]+)/([a-zA-Z0-9-]+)' => [
+        'GET /report/([a-z]+)/(' . Constants::GROUP_PATTERN  . ')' => [
             'AUTHSCHEME' => 'cookie',
             'LAYOUT' => 'jars/admin/main',
             'PAGE' => 'jars/admin/frontend/report',
