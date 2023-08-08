@@ -12,7 +12,7 @@
 <?php $pieces = []; ?>
 <?php foreach ($groups as $i => $groupset): ?>
     <?php $selected = preg_replace(',/$,', '', $path[$i] ?? ''); ?>
-    <?php if (count($groupset) > 1 || count($groupset) && reset($groupset) !== 'all'): ?>
+    <?php if (count($groupset)): ?>
         <div class="sidebar" id="sidebar" data-area-margin="15" data-area-maxwidth="150">
             <nav>
                 <?php foreach ($groupset as $group_name): ?>
