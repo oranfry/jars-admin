@@ -10,15 +10,13 @@ $('#loginform').on('submit', function(e){
         processData: false,
         data: JSON.stringify({username: username, password: password}),
         success: function(data) {
-            if (typeof data.token != 'undefined') {
+            if (typeof data.token === 'string') {
                 setCookie('token', data.token);
                 window.location.reload();
-            } else {
-                alert(data.error || 'Unknown error');
             }
         },
         error: function(data){
-            alert(data.responseJSON && data.responseJSON.error || 'Unknown error');
+            alert(data.responseJSON && data.responseJSON.message || 'Unknown error');
         }
     });
 });
