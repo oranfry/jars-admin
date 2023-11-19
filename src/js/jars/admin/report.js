@@ -98,6 +98,12 @@ $('.edit-form .saveline').on('click', function(e) {
 
     line.type = $line.attr('data-type');
 
+    for (key in line) {
+        if (line[key] === '') {
+            line[key] = null;
+        }
+    }
+
     $form.find('input[type="checkbox"]').each(function() {
         line[$(this).attr('name')] = $(this).is(':checked');
     });
