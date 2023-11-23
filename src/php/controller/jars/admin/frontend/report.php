@@ -37,7 +37,6 @@ if (GROUP_NAME && 0 <= $index = count($groups) - 2) {
 }
 
 $linetypes = $jars->linetypes(REPORT_NAME);
-
 $title = REPORT_NAME;
 
 if (GROUP_NAME) {
