@@ -1,6 +1,4 @@
-<?php
-
-?><input<?php
+<input<?php
 
 ?> autocomplete="off"<?php
 ?> class="field value"<?php
