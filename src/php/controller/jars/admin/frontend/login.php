@@ -11,13 +11,13 @@ if ($token = @$_COOKIE['token']) {
     $jars->token($token);
 
     if ($jars->touch()) {
-        list($first) = $jars->reports();
+        $reports = $jars->reports();
 
-        if (!$first) {
-            error_response('No reports!');
+        if (!$reports) {
+            throw new Exception('No reports!');
         }
 
-        header('Location: /report/' . $first->name);
+        header('Location: /report/' . reset($reports)->name);
 
         die('Redirecting...');
     }
