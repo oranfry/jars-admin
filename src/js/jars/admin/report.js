@@ -1,3 +1,15 @@
+window.alert_exception = function (data) {
+    let exception = data.responseJSON.exception ?? 'Unknown Exception';
+    let message = data.responseJSON.message ?? 'No message was given';
+
+    if (typeof data.responseJSON.private_message !== 'undefined') {
+        exception = data.responseJSON.private_exception;
+        message = data.responseJSON.private_message;
+    }
+
+    alert(exception + "\n\n" + message);
+};
+
 window.clearInputs = function() {
     $(this).find('input[type="file"]').each(function(){
         var $controls = $(this).closest('.file-field-controls');
@@ -123,9 +135,7 @@ $('.edit-form .saveline').on('click', function(e) {
                     window.location.reload();
                 }
             },
-            error: function(data){
-                alert(data.responseJSON.error);
-            }
+            error: alert_exception
         });
     };
 
@@ -202,9 +212,7 @@ $('.edit-form .savelineraw').on('click', function(e) {
                 window.location.reload();
             }
         },
-        error: function(data){
-            alert(data.responseJSON.error);
-        }
+        error: alert_exception
     });
 });
 
@@ -238,9 +246,7 @@ $('.edit-form .deleteline').on('click', function(e) {
                     window.location.reload();
                 }
             },
-            error: function(data){
-                alert(data.responseJSON.error);
-            }
+            error: alert_exception
         });
     }
 });
