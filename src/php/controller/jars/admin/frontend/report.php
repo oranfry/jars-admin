@@ -18,7 +18,7 @@ $path = [];
 
 foreach (explode('/', GROUP_NAME . (GROUP_NAME ? '/' : null) . 'fake') as $part) {
     $prefix = ($prefix = implode('/', $path)) ? $prefix . '/' : '';
-    $groups[] = array_filter($jars->groups(REPORT_NAME, $prefix, $min));
+    $groups[] = array_filter($jars->groups(REPORT_NAME, $prefix, $min), fn ($g) => $g !== '');
     $path[] = $part;
 }
 
