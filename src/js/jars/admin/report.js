@@ -7,7 +7,7 @@ window.alert_exception = function (data) {
         message = data.responseJSON.private_message;
     }
 
-    alert(exception + "\n\n" + message);
+    alert(message);
 };
 
 window.clearInputs = function() {
