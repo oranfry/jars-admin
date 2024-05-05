@@ -43,16 +43,50 @@ class AdminRouter extends \subsimple\Router
             'AUTHSCHEME' => 'cookie',
             'LAYOUT' => 'jars/admin/main',
             'PAGE' => 'jars/admin/frontend/report',
+            'LINETYPE_NAME' => null,
+            'LINE_ID' => null,
+            'GROUP_NAME' => '',
             0 => 'REPORT_NAME',
-           'GROUP_NAME' => '',
         ],
 
         'GET /report/([a-z]+)/(' . Constants::GROUP_PATTERN  . ')' => [
             'AUTHSCHEME' => 'cookie',
             'LAYOUT' => 'jars/admin/main',
             'PAGE' => 'jars/admin/frontend/report',
+            'LINETYPE_NAME' => null,
+            'LINE_ID' => null,
             0 => 'REPORT_NAME',
             1 => 'GROUP_NAME',
+        ],
+
+        'GET /report/([a-z]+):([a-z]+)/([a-zA-Z0-9-]+)' => [
+            'AUTHSCHEME' => 'cookie',
+            'LAYOUT' => 'jars/admin/main',
+            'PAGE' => 'jars/admin/frontend/report',
+            'GROUP_NAME' => '',
+            0 => 'REPORT_NAME',
+            1 => 'LINETYPE_NAME',
+            2 => 'LINE_ID',
+        ],
+
+        'GET /report/([a-z]+)/(' . Constants::GROUP_PATTERN  . '):([a-z]+)/([a-zA-Z0-9-]+)' => [
+            'AUTHSCHEME' => 'cookie',
+            'LAYOUT' => 'jars/admin/main',
+            'PAGE' => 'jars/admin/frontend/report',
+            0 => 'REPORT_NAME',
+            1 => 'GROUP_NAME',
+            2 => 'LINETYPE_NAME',
+            3 => 'LINE_ID',
+        ],
+
+        'GET /raw/([a-z]+)/(' . Constants::GROUP_PATTERN  . '):([a-z]+)/([a-zA-Z0-9-]+)' => [
+            'AUTHSCHEME' => 'cookie',
+            'LAYOUT' => 'jars/admin/main',
+            'PAGE' => 'jars/admin/frontend/raw',
+            0 => 'REPORT_NAME',
+            1 => 'GROUP_NAME',
+            2 => 'LINETYPE_NAME',
+            3 => 'LINE_ID',
         ],
 
         // download

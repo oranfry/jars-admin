@@ -20,6 +20,6 @@
     <?php endif ?>
 
     <script type="text/javascript" src="/build/js/app.<?= latest('js') ?>.js"></script>
-    <?php @include APP_HOME . '/src/php/partial/js/' . PAGE . '.php'; ?>
+    <?php ss_include('src/php/partial/js/' . PAGE . '.php', $viewdata); ?>
 </body>
 </html>

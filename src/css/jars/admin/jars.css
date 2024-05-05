@@ -80,12 +80,11 @@ body.centered {
 
 .raw:not(.fullarea) {
     border: #999 1px solid;
-    margin: 0 2em;
 }
 
 textarea.raw:not(.fullarea) {
-    width: 90%;
-    height: 20em;
+    width: 100%;
+    height: 40em;
 }
 
 textarea.raw.fullarea {

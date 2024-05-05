@@ -105,8 +105,6 @@ foreach ($groups as $i => $groupset) {
                                     ?><input type="hidden" name="<?= $field->name ?>" value="<?= htmlspecialchars($line->{$field->name} ?? '') ?>"><?php
                                 }
                             }
-                            ?><br><br><?php
-                            ?><textarea class="raw"><?= htmlspecialchars(json_encode($line, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)) ?></textarea><?php
                         ?></span><?php
                     ?></div><?php
                 ?></div><?php
@@ -180,18 +178,11 @@ if (@$linetypes) {
                     }
                     ?><div class="form-row"><?php
                         ?><div class="form-row__label">&nbsp;</div><?php
-                        ?><div class="form-row__value"><button class="saveline button button--main" type="button">Save</button> <button class="deleteline button button--main" type="button">Delete</button></div><?php
-                        ?><div style="clear: both"></div><?php
-                        ?><br><?php
-                    ?></div><?php
-                ?></form><?php
-                ?><form method="post"><?php
-                    ?><div><?php
-                        ?><textarea name="raw" class="raw"></textarea><?php
-                    ?></div><?php
-                    ?><div class="form-row"><?php
-                        ?><div class="form-row__label">&nbsp;</div><?php
-                        ?><div class="form-row__value"><button class="savelineraw button button--main" type="button">Save</button> <button class="deleteline button button--main" type="button">Delete</button></div><?php
+                        ?><div class="form-row__value"><?php
+                            ?><button class="saveline button button--main" type="button">Save</button><?php
+                            ?> <button class="deleteline button button--main" type="button">Delete</button><?php
+                            ?> <button class="rawline button button--main" type="button">Raw</button><?php
+                        ?></div><?php
                         ?><div style="clear: both"></div><?php
                         ?><br><?php
                     ?></div><?php
