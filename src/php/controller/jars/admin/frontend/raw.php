@@ -15,7 +15,14 @@ $line = Obex::from($jars->group(REPORT_NAME, GROUP_NAME))
     ->filter('id', 'is', LINE_ID)
     ->find('type', 'is', LINETYPE_NAME);
 
+$base_version = $jars->version();
+
 $title = 'Raw Editor';
 $back = preg_replace(',/raw/,', '/report/', $_SERVER['REQUEST_URI']);
 
-return compact('line', 'title', 'back');
+return compact(
+    'back',
+    'base_version',
+    'line',
+    'title',
+);

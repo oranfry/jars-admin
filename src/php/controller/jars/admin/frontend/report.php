@@ -44,9 +44,18 @@ if (GROUP_NAME) {
 }
 
 $data = $jars->group(REPORT_NAME, GROUP_NAME, @$min);
+$base_version = $jars->version();
 
 if ($jars->report(REPORT_NAME)->is_derived()) {
-    return compact('jars', 'data', 'groups', 'path', 'reports', 'title');
+    return compact(
+        'base_version',
+        'data',
+        'groups',
+        'jars',
+        'path',
+        'reports',
+        'title',
+    );
 }
 
 $lines = &$data;
@@ -54,4 +63,16 @@ $pos = array_search(GROUP_NAME, $groups);
 $prevGroup = $pos !== false && $pos > 0 ? $groups[$pos - 1] : null;
 $nextGroup = $pos !== false && $pos < count($groups) - 1 ? $groups[$pos + 1] : null;
 
-return compact('jars', 'fields', 'groups', 'path', 'lines', 'linetypes', 'reports', 'title', 'prevGroup', 'nextGroup');
+return compact(
+    'base_version',
+    'fields',
+    'groups',
+    'jars',
+    'lines',
+    'linetypes',
+    'nextGroup',
+    'path',
+    'prevGroup',
+    'reports',
+    'title',
+);

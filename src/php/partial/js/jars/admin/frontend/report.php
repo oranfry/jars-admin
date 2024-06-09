@@ -56,6 +56,7 @@
                 contentType: false,
                 processData: false,
                 data: JSON.stringify([line]),
+                headers: {'X-Base-Version': base_version},
                 success: function(response, status, request) {
                     if ('URLSearchParams' in window) {
                         var searchParams = new URLSearchParams(window.location.search);

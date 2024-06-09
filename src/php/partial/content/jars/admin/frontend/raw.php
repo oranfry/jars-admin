@@ -1,4 +1,6 @@
-<div style="margin: 1em"><?php
+<script>let base_version = '<?= $base_version ?>';</script><?php
+
+?><div style="margin: 1em"><?php
     ?><a href="<?= $back ?>">Back</a><br><br><?php
 
     ?><form method="post"><?php

@@ -2,6 +2,8 @@
 
 use obex\Obex;
 
+?><script>let base_version = '<?= $base_version ?>';</script><?php
+
 ?><div class="sidebar" id="sidebar" data-area-margin="15" data-area-maxwidth="150"><?php
     ?><nav><?php
         foreach ($reports as $report) {
