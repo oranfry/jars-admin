@@ -2,4 +2,4 @@
 
 $body_class = ['centered'];
 
-ss_require('src/php/layout/jars/admin/main.php', $viewdata);
+ss_require('src/php/layout/jars/admin/main.php', $viewdata + compact('body_class'));
