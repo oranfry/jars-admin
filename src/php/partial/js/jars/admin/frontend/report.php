@@ -47,7 +47,9 @@
         });
 
         $form.find('input[type="number"]').each(function() {
-            line[$(this).attr('name')] = Number($(this).val());
+            let value = $(this).val();
+
+            line[$(this).attr('name')] = value !== '' && Number(value) || null;
         });
 
         var handleSave = function() {
