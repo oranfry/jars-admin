@@ -80,7 +80,7 @@ window.selectOneLine = function() {
 
     window.history.pushState({}, document.title, pagelink(linetype, id));
 
-    $('.rawline').show();
+    $('.rawline').attr('href', '/raw/' + REPORT_NAME + '/' + GROUP_NAME + ':' + linetype + '/' + id).show();
 
     window.jarsOnResize();
 };
@@ -96,7 +96,7 @@ window.selectEmptyLine = function() {
 
     $line.show();
     $('.line').not($line).hide();
-    $('.rawline').hide();
+    $('.rawline').removeAttr('href').hide();
 
     window.history.pushState({}, document.title, pagelink());
 

@@ -183,7 +183,7 @@ if (@$linetypes) {
                         ?><div class="form-row__value"><?php
                             ?><button class="saveline button button--main" type="button">Save</button><?php
                             ?> <button class="deleteline button button--main" type="button">Delete</button><?php
-                            ?> <button class="rawline button button--main" type="button">Raw</button><?php
+                            ?> <a class="rawline" style="display: none">Raw</a><?php
                         ?></div><?php
                         ?><div style="clear: both"></div><?php
                         ?><br><?php
