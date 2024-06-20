@@ -153,7 +153,14 @@ window.jarsOnResize = function () {
         });
 
         widths.push(width);
-        maxwidths.push($(this).data('area-maxwidth'));
+
+        var matches, maxwidth = $(this).data('area-maxwidth');
+
+        if (typeof maxwidth === 'string' && (matches = maxwidth.match(/^([1-9][0-9]*(?:\.[0-9]+)?)%$/))) {
+            maxwidth = parseFloat(matches[1]) * $(window).width() / 100;
+        }
+
+        maxwidths.push(maxwidth);
         margins.push(margin);
     });
 

@@ -15,15 +15,22 @@
 
 .easy-table .easy-table__row .easy-table__cell {
     display: table-cell;
-    padding: 0.5em 0.6em;
     border-bottom: 1px solid #ccc;
+    padding-left: 0.6em;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
 }
 
-.easy-table .easy-table__row .easy-table__cell .limitedwidth {
-    overflow: hidden;
-    text-overflow: ellipsis;
+.easy-table .easy-table__row .easy-table__cell:last-child {
+    padding-right: 0.6em;
+}
+
+.easy-table .easy-table__row .easy-table__cell.limitedwidth {
+    line-height: 1.4em;
+}
+
+.easy-table .easy-table__row .easy-table__cell.limitedwidth > div {
     max-width: 500px;
-    white-space: nowrap;
 }
 
 .easy-table th:first-child, .easy-table td:first-child, .easy-table td.first-child {
@@ -71,9 +78,6 @@
 
 .easy-table .easy-table__cell:not(.extend) {
     cursor: default;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .easy-table input[type="checkbox"] {
@@ -108,10 +112,4 @@
 .easy-table .extend p {
     opacity: 25%;
     text-align: right;
-}
-
-.easy-table td.small {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }

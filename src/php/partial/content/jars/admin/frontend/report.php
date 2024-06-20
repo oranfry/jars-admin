@@ -90,12 +90,14 @@ foreach ($groups as $i => $groupset) {
 
                     foreach ($fields as $field) {
                         ?><div<?php
-                        ?> class="easy-table__cell list-value"<?php
+                        ?> class="easy-table__cell list-value limitedwidth"<?php
                         ?> data-name="<?= $field->name ?>"<?php
                         ?> style="max-width: <?= bcdiv(90, count($fields), 2) ?>%; <?php if ($field->type == 'number'): ?>text-align: right;<?php endif ?>"<?php
-                        ?>><?php
-                            ?><div class="limitedwidth"><?= htmlspecialchars($line->{$field->name} ?? '') ?></div><?php
-                        ?></div><?php
+                        ?>><div><?=
+
+                            htmlspecialchars($line->{$field->name} ?? '')
+
+                        ?></div></div><?php
                     }
 
                     ?><div class="easy-table__cell extend limitedwidth"><?php
