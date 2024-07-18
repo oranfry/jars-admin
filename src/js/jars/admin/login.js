@@ -20,3 +20,39 @@ $('#loginform').on('submit', function(e){
         }
     });
 });
+
+$('#tokenform').on('submit', function(e){
+    e.preventDefault();
+
+    let token = $(this).find('[name="token"]').val();
+
+    setCookie('token', token);
+    window.location.reload();
+});
+
+window.refreshPanel = function () {
+    let $allChoosers = $('.panel-choosers .panel-chooser');
+    let $allPanels = $('.panels .panel');
+
+    let index = $allChoosers.index($allChoosers.filter('.current')[0]);
+    let $panel = $allPanels.filter(':nth-child(' + (index + 1) + ')');
+
+    $allPanels.hide();
+    $panel.show();
+}
+
+$('.panel-choosers').on('click', '.panel-chooser', function () {
+    $('.panel-choosers').find('.panel-chooser').removeClass('current');
+    $(this).addClass('current');
+    refreshPanel();
+});
+
+$('.showpassword').on('click', function () {
+    let $field = $(this).next()
+    let hidden = $field.attr('type') == 'password';
+
+    hidden = !hidden;
+
+    $field.attr('type', hidden && 'password' || 'text');
+    $(this).html(hidden && '🙈' || '🐵');
+});

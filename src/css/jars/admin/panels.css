@@ -1,0 +1,49 @@
+.cred-line {
+    margin-bottom: 1em;
+    position: relative;
+}
+
+.cred-line p {
+    margin: 0 0 0.5em;
+}
+
+.cred-line input {
+    padding: 0.25em;
+}
+
+.cred-line input[type="text"], .cred-line input[type="password"] {
+    width: 250px;
+}
+
+.cred-line .showpassword {
+    position: absolute;
+    left: 105%;
+    bottom: 0.25em;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.panel-choosers {
+    width: 100%;
+    position: relative;
+    border: 1px solid #ccc;
+    display: table;
+    margin-bottom: 1em;
+}
+
+.panel-chooser {
+    display: table-cell;
+    cursor: pointer;
+    width: 50%;
+    background: #ddd;
+    text-align: center;
+    padding: .5em;
+    border: 2px solid transparent;
+}
+
+.panel-chooser.current {
+    background: white;
+    border: 2px solid #666;
+}

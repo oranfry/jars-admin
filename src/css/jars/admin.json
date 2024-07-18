@@ -4,5 +4,6 @@
     "src/css/jars/admin/forms.css",
     "src/css/jars/admin/easy-tables.css",
     "src/css/jars/admin/icon.css",
+    "src/css/jars/admin/panels.css",
     "php:src/php/script/jars/admin/iconcss.php"
 ]
