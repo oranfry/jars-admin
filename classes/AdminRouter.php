@@ -79,6 +79,16 @@ class AdminRouter extends \subsimple\Router
             3 => 'LINE_ID',
         ],
 
+        'GET /raw/([a-z]+)/(' . Constants::GROUP_PATTERN  . ')' => [
+            'AUTHSCHEME' => 'cookie',
+            'LAYOUT' => 'jars/admin/main',
+            'PAGE' => 'jars/admin/frontend/raw',
+            0 => 'REPORT_NAME',
+            1 => 'GROUP_NAME',
+            'LINETYPE_NAME' => null,
+            'LINE_ID' => null,
+        ],
+
         'GET /raw/([a-z]+)/(' . Constants::GROUP_PATTERN  . '):([a-z]+)/([a-zA-Z0-9-]+)' => [
             'AUTHSCHEME' => 'cookie',
             'LAYOUT' => 'jars/admin/main',

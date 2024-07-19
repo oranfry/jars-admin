@@ -11,6 +11,8 @@ use obex\Obex;
 
             ?> href="/report/<?= $report->name ?>"<?php
 
+            // why the first condition here?
+
             if (PAGE == 'jars/admin/frontend/report' && REPORT_NAME == $report->name) {
                 ?> class="current"<?php
             }
@@ -114,7 +116,11 @@ foreach ($groups as $i => $groupset) {
                 ?></div><?php
             }
         ?></div><?php
-        ?><div style="text-align:center; color: #999;"><br><?= count($lines) ?> lines</div><?php
+        ?><div style="text-align:center; color: #999; margin-top: 2em"><?php
+            ?><?= count($lines) ?> lines<?php
+            ?>&nbsp;&nbsp;&nbsp;<span style="color: #ccc">|</span>&nbsp;&nbsp;&nbsp;<?php
+            ?><a style="color: #999" href="/raw/<?= REPORT_NAME ?>/<?= GROUP_NAME ?>">raw editor</a><?php
+        ?></div><?php
     }
 
     if (isset($data)) {
@@ -126,7 +132,7 @@ foreach ($groups as $i => $groupset) {
             foreach ($linetypes as $linetype) {
                 ?><a<?php
                 ?> href="#"<?php
-                ?> class="trigger-add-line"<?php
+                ?> class=""<?php
                 ?> data-type="<?= $linetype->name ?>"<?php
                 ?>><?php
 
