@@ -132,7 +132,7 @@ foreach ($groups as $i => $groupset) {
             foreach ($linetypes as $linetype) {
                 ?><a<?php
                 ?> href="#"<?php
-                ?> class=""<?php
+                ?> class="trigger-add-line"<?php
                 ?> data-type="<?= $linetype->name ?>"<?php
                 ?>><?php
 
