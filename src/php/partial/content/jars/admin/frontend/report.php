@@ -95,9 +95,15 @@ foreach ($groups as $i => $groupset) {
                         ?> class="easy-table__cell list-value limitedwidth"<?php
                         ?> data-name="<?= $field->name ?>"<?php
                         ?> style="max-width: <?= bcdiv(90, count($fields), 2) ?>%; <?php if ($field->type == 'number'): ?>text-align: right;<?php endif ?>"<?php
-                        ?>><div><?=
+                        ?>><div><?php
 
-                            htmlspecialchars($line->{$field->name} ?? '')
+                            $display = $line->{$field->name} ?? '';
+
+                            if ($field->name === 'id' || ($field->is_jars_id_reference ?? false)) {
+                                $display = substr($display, 0, 7);
+                            }
+
+                            echo htmlspecialchars($display);
 
                         ?></div></div><?php
                     }
