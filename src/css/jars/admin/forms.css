@@ -58,6 +58,13 @@
     text-decoration: none;
 }
 
+.form-row__value input,
+.form-row__value select,
+.form-row__value button,
+.form-row__value textarea {
+    font-family: monospace;
+}
+
 .form-row__value input[type="checkbox"] {
     display: inline-block;
     width: 14px;

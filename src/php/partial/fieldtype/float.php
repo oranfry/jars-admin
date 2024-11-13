@@ -8,7 +8,7 @@ if ($dp) {
     ?> step="<?= 1 / pow(10, $dp) ?>"<?php
 }
 
-?> style="width: 8em"<?php
+?> style="width: 12em"<?php
 ?> type="number"<?php
 
 ?>><?php
