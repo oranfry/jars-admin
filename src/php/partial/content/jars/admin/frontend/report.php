@@ -44,7 +44,13 @@ foreach ($groups as $i => $groupset) {
 
                     ?>><?php
 
-                    echo $group_name;
+                    $display = $group_name;
+
+                    if (preg_match('/^[0-9a-f]{64}$/', $group_name)) {
+                        $display = substr($display, 0, 7) . '&hellip;';
+                    }
+
+                    echo $display;
 
                     ?></a><?php
                 }
