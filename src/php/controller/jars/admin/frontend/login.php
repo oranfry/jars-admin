@@ -17,7 +17,7 @@ if ($token = @$_COOKIE['token']) {
             throw new Exception('No reports!');
         }
 
-        header('Location: /report/' . reset($reports)->name);
+        header('Location: ' . BASEPATH . '/report/' . reset($reports)->name);
 
         die('Redirecting...');
     }

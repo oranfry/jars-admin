@@ -19,20 +19,22 @@ if (isset($body_class)) {
 
     ss_require('src/php/partial/content/' . (defined('VIEW') ? VIEW : PAGE) . '.php', $viewdata);
 
-    if ($jars->token()) {
-        ?><script><?php
+    ?><script><?php
+        ?>window.BASEPATH = '<?= BASEPATH ?>';<?php
+        ?>window.HOMEPATH = '<?= HOMEPATH ?>';<?php
+
+        if (defined('BACK') && BACK) {
+            ?>window.BACK = '<?= BACK ?>';<?php
+        }
+
+        foreach (PAGE_PARAMS as $key => $value) {
+            ?>window.<?= "{$key} = '{$value}'"; ?>;<?php
+        }
+
+        if ($jars->token()) {
             ?>window.orig_token = '<?= $jars->token() ?>';<?php
-
-            foreach (PAGE_PARAMS as $key => $value) {
-                ?>window.<?= "{$key} = '{$value}'"; ?>;<?php
-            }
-
-            if (defined('BACK') && BACK) {
-                ?>var back = '<?= BACK ?>';<?php
-            }
-
-        ?></script><?php
-    }
+        }
+    ?></script><?php
 
     ?><script type="text/javascript" src="/build/js/app.<?= latest('js') ?>.js"></script><?php
 

@@ -29,7 +29,7 @@
             data: JSON.stringify(data),
             headers: {'X-Base-Version': base_version},
             success: function(response, status, request) {
-                window.location.href = back + '?version=' + request.getResponseHeader('X-Version');
+                window.location.href = BACK + '?version=' + request.getResponseHeader('X-Version');
             },
             error: alert_exception
         });

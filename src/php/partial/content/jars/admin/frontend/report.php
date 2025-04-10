@@ -9,7 +9,7 @@ use obex\Obex;
         foreach ($reports as $report) {
             ?><a<?php
 
-            ?> href="/report/<?= $report->name ?>"<?php
+            ?> href="<?= BASEPATH ?>/report/<?= $report->name ?>"<?php
 
             // why the first condition here?
 
@@ -36,7 +36,7 @@ foreach ($groups as $i => $groupset) {
             ?><nav><?php
                 foreach ($groupset as $group_name) {
                     ?><a<?php
-                    ?> href="/report/<?= REPORT_NAME ?>/<?= ($prefix = implode('/', $pieces)) ? $prefix . '/' : null ?><?= $group_name ?>"<?php
+                    ?> href="<?= BASEPATH ?>/report/<?= REPORT_NAME ?>/<?= ($prefix = implode('/', $pieces)) ? $prefix . '/' : null ?><?= $group_name ?>"<?php
 
                     if ($group_name == $selected){
                         ?> class="current"<?php
@@ -131,7 +131,7 @@ foreach ($groups as $i => $groupset) {
         ?><div style="text-align:center; color: #999; margin-top: 2em"><?php
             ?><?= count($lines) ?> lines<?php
             ?>&nbsp;&nbsp;&nbsp;<span style="color: #ccc">|</span>&nbsp;&nbsp;&nbsp;<?php
-            ?><a style="color: #999" href="/raw/<?= REPORT_NAME ?>/<?= GROUP_NAME ?>">raw editor</a><?php
+            ?><a style="color: #999" href="<?= BASEPATH ?>/raw/<?= REPORT_NAME ?>/<?= GROUP_NAME ?>">raw editor</a><?php
         ?></div><?php
     }
 

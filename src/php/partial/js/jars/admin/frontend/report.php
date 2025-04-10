@@ -1,7 +1,7 @@
 <script>
 (function(){
     window.pagelink = function (linetype, id) {
-        let link = '/report/' + REPORT_NAME + '/' + GROUP_NAME;
+        let link = BASEPATH + '/report/' + REPORT_NAME + '/' + GROUP_NAME;
 
         if (linetype && id) {
             link = link + ':' + linetype + '/' + id;

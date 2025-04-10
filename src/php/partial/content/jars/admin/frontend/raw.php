@@ -12,4 +12,4 @@
         ?></div><?php
     ?></form><?php
 ?></div><?php
-?><script>let back = '<?= $back ?>';</script><?php
+?><script>window.BACK = '<?= $back ?>';</script><?php

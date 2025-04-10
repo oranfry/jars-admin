@@ -7,7 +7,7 @@ use obex\Obex;
 $reports = $jars->reports();
 
 if (!$report = Obex::find($reports, 'name', 'is', REPORT_NAME)) {
-    header("Location: /");
+    header('Location: ' . HOMEPATH);
     die();
 }
 
@@ -24,9 +24,4 @@ $base_version = $jars->version();
 $title = 'Raw Editor';
 $back = preg_replace(',/raw/,', '/report/', $_SERVER['REQUEST_URI']);
 
-return compact(
-    'back',
-    'base_version',
-    'data',
-    'title',
-);
+return compact('back', 'base_version', 'data', 'title');
