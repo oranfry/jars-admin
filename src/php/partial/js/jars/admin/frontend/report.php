@@ -53,7 +53,7 @@
         });
 
         var handleSave = function() {
-            $.ajax('/ajax/save', {
+            $.ajax(BASEPATH + '/ajax/save', {
                 method: 'post',
                 contentType: false,
                 processData: false,
@@ -125,7 +125,7 @@
         };
 
         if (confirm('delete ' + linetype + ' ' + id + '?')) {
-            $.ajax('/ajax/save', {
+            $.ajax(BASEPATH + '/ajax/save', {
                 method: 'post',
                 contentType: false,
                 processData: false,

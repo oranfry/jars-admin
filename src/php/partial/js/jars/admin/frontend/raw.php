@@ -22,7 +22,7 @@
             }
         }
 
-        $.ajax('/ajax/save', {
+        $.ajax(BASEPATH + '/ajax/save', {
             method: 'post',
             contentType: false,
             processData: false,
