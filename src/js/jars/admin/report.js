@@ -80,7 +80,7 @@ window.selectOneLine = function() {
 
     window.history.pushState({}, document.title, pagelink(linetype, id));
 
-    $('.rawline').attr('href', '/raw/' + REPORT_NAME + '/' + GROUP_NAME + ':' + linetype + '/' + id).show();
+    $('.rawline').attr('href', BASEPATH + '/raw/' + REPORT_NAME + '/' + GROUP_NAME + ':' + linetype + '/' + id).show();
 
     window.jarsOnResize();
 };

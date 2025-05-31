@@ -22,7 +22,7 @@
         let id = $form.find('input[name="id"]').val();
 
         if (id) {
-            location.href = '/raw/' + REPORT_NAME + '/' + GROUP_NAME + ':' + $line.attr('data-type') + '/' + id;
+            location.href = BASEPATH + '/raw/' + REPORT_NAME + '/' + GROUP_NAME + ':' + $line.attr('data-type') + '/' + id;
         }
     });
 
