@@ -28,7 +28,6 @@
 .panel-choosers {
     width: 100%;
     position: relative;
-    border: 1px solid #ccc;
     display: table;
     margin-bottom: 1em;
 }
@@ -37,13 +36,37 @@
     display: table-cell;
     cursor: pointer;
     width: 50%;
-    background: #ddd;
     text-align: center;
     padding: .5em;
     border: 2px solid transparent;
 }
 
-.panel-chooser.current {
-    background: white;
-    border: 2px solid #666;
+@media (prefers-color-scheme: light) {
+    .panel-chooser {
+        background: #ddd;
+    }
+
+    .panel-chooser.current {
+        background: white;
+        border: 2px solid #666;
+    }
+
+    .panel-choosers {
+        border: 1px solid #ccc;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .panel-chooser {
+        background: #333;
+    }
+
+    .panel-chooser.current {
+        background: #333;
+        border: 2px solid #888;
+    }
+
+    .panel-choosers {
+        border: 1px solid #333;
+    }
 }

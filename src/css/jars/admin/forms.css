@@ -50,11 +50,8 @@
     display: inline-block;
     appearance: none;
     -moz-appearance: none;
-    border: 1px solid #ccc;
     box-sizing: border-box;
-    background-color: white;
     border-radius: 0;
-    color: #333;
     text-decoration: none;
 }
 
@@ -84,4 +81,34 @@
     padding: 0 0.3em;
     font-size: 1em;
     line-height: 2em;
+}
+
+@media (prefers-color-scheme: light) {
+    .form-row__value input,
+    .form-row__value select,
+    .form-row__value button,
+    .form-row__value textarea,
+    .form-row__value .textbox,
+    .form-row__value .button {
+        background-color: white;
+        color: #333;
+        border: 1px solid #ccc;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .form-row__value input,
+    .form-row__value select,
+    .form-row__value button,
+    .form-row__value textarea,
+    .form-row__value .textbox,
+    .form-row__value .button {
+        background-color: #111;
+        color: white;
+        border: 1px solid #333;
+    }
+
+    .form-row__value input[type="checkbox"] {
+        background-color: #555;
+    }
 }

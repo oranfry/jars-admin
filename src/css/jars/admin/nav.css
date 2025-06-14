@@ -6,7 +6,6 @@
 nav a {
     display: block;
     text-decoration: none;
-    color: #333;
     white-space: nowrap;
 }
 
@@ -22,7 +21,25 @@ nav a {
     margin-bottom: 12px;
 }
 
-nav a.current {
-    background-color: white;
-    color: #333;
+
+@media (prefers-color-scheme: light) {
+    nav a {
+        color: #333;
+    }
+
+    nav a.current {
+        background-color: white;
+        color: #333;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    nav a {
+        color: #cdcdcd;
+    }
+
+    nav a.current {
+        background-color: #ddd;
+        color: #333;
+    }
 }

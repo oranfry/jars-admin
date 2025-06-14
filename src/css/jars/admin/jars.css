@@ -49,20 +49,6 @@ body.centered {
     z-index: 10;
 }
 
-.area + .area {
-    border-left: 1px solid #ccc;
-    background-color: #eee;
-}
-
-.sidebar {
-    background-color: #555;
-    border-right: 2px solid #333;
-}
-
-.sidebar, .sidebar a {
-    color: white;
-}
-
 .sidebar::-webkit-scrollbar, .area::-webkit-scrollbar {
     display: none;
 }
@@ -75,11 +61,6 @@ body.centered {
 
 .raw {
     padding: 1em;
-    background: white;
-}
-
-.raw:not(.fullarea) {
-    border: #999 1px solid;
 }
 
 textarea.raw:not(.fullarea) {
@@ -91,4 +72,73 @@ textarea.raw.fullarea {
     border: none;
     width: 100%;
     height: 100vh;
+}
+
+
+@media (prefers-color-scheme: light) {
+    html, body {
+        background-color: white;
+        color: #333;
+    }
+
+    html a, body a {
+        color: #333;
+    }
+
+    .sidebar {
+        background-color: #555;
+        border-right: 2px solid #333;
+    }
+
+    .sidebar, .sidebar a {
+        color: white;
+    }
+
+    .raw {
+        background: white;
+        color: #333;
+    }
+
+    .area + .area {
+        border-left: 1px solid #ccc;
+        background-color: #cdcdcd;
+    }
+
+    .raw:not(.fullarea) {
+        border: 1px solid #999;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    html, body {
+        background-color: #111;
+        color: #cdcdcd;
+    }
+
+    html a, body a {
+        color: #cdcdcd;
+    }
+
+    .sidebar {
+        background-color: #333;
+        border-right: 2px solid #222;
+    }
+
+    .sidebar, .sidebar a {
+        color: #cdcdcd;
+    }
+
+    .raw {
+        background: #111;
+        color: white;
+    }
+
+    .area + .area {
+        border-left: 1px solid #333;
+        background-color: #222;
+    }
+
+    .raw:not(.fullarea) {
+        border: 1px solid #555;
+    }
 }

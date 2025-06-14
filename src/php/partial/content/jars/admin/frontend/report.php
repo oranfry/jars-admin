@@ -128,10 +128,10 @@ foreach ($groups as $i => $groupset) {
                 ?></div><?php
             }
         ?></div><?php
-        ?><div style="text-align:center; color: #999; margin-top: 2em"><?php
+        ?><div style="text-align:center; margin-top: 2em"><?php
             ?><?= count($lines) ?> lines<?php
-            ?>&nbsp;&nbsp;&nbsp;<span style="color: #ccc">|</span>&nbsp;&nbsp;&nbsp;<?php
-            ?><a style="color: #999" href="<?= BASEPATH ?>/raw/<?= REPORT_NAME ?>/<?= GROUP_NAME ?>">raw editor</a><?php
+            ?>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?php
+            ?><a href="<?= BASEPATH ?>/raw/<?= REPORT_NAME ?>/<?= GROUP_NAME ?>">raw editor</a><?php
         ?></div><?php
     }
 
