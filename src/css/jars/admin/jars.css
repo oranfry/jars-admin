@@ -107,6 +107,11 @@ textarea.raw.fullarea {
     .raw:not(.fullarea) {
         border: 1px solid #999;
     }
+
+    input, textarea {
+        background-color: white;
+        color: #333;
+    }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -116,6 +121,11 @@ textarea.raw.fullarea {
     }
 
     html a, body a {
+        color: #cdcdcd;
+    }
+
+    input, textarea {
+        background-color: #333;
         color: #cdcdcd;
     }
 
