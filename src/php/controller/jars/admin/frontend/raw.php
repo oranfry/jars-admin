@@ -1,7 +1,8 @@
 <?php
 
-use jars\Report;
+use jars\admin\Helper;
 use jars\contract\Constants;
+use jars\Report;
 use obex\Obex;
 
 $reports = $jars->reports();
@@ -17,6 +18,14 @@ if (LINE_ID) {
     $data = Obex::from($data)
         ->filter('id', 'is', LINE_ID)
         ->find('type', 'is', LINETYPE_NAME);
+
+    $lines = [$data];
+    $linetypes = $linetypes = $jars->linetypes(REPORT_NAME);
+
+    if (CHILDPATH) {
+        $childpath = Helper::parseChildPath($jars, CHILDPATH, LINETYPE_NAME, LINE_ID, $lines, $linetypes, $me);
+        $data = $me;
+    }
 }
 
 $base_version = $jars->version();

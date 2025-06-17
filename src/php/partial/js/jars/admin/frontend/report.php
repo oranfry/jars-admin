@@ -1,30 +1,29 @@
 <script>
 (function(){
-    window.pagelink = function (linetype, id) {
+    window.pagelink = function (linetype, id, childpath) {
+        if (typeof childpath === 'undefined') {
+            childpath = [];
+        }
+
         let link = BASEPATH + '/report/' + REPORT_NAME + '/' + GROUP_NAME;
 
         if (linetype && id) {
             link = link + ':' + linetype + '/' + id;
         }
 
+        for (let i = 0; i < childpath.length; i++) {
+            link = link + '/' + childpath[i].property;
+
+            if (childpath[i].id) {
+                link = link + '/' + childpath[i].id;
+            }
+        }
+
         return link;
     };
 
     $('.linerow').on('click', selectOneLine);
-
     $('.trigger-add-line').on('click', selectEmptyLine);
-
-    $('.edit-form .rawline').on('click', function(e) {
-        e.preventDefault();
-
-        let $line = $(this).closest('.line');
-        let $form = $(this).closest('form');
-        let id = $form.find('input[name="id"]').val();
-
-        if (id) {
-            location.href = BASEPATH + '/raw/' + REPORT_NAME + '/' + GROUP_NAME + ':' + $line.attr('data-type') + '/' + id;
-        }
-    });
 
     $('.edit-form .saveline').on('click', function(e) {
         e.preventDefault();
@@ -160,8 +159,11 @@
     $(window).on('resize', jarsOnResize);
 
     let $linerow;
+    let topChild = childpath[childpath.length - 1];
 
-    if (LINE_ID) {
+    if (topChild && (child_id = topChild.id)) {
+        $linerow = $('.linerow[data-id="' + child_id + '"]').first();
+    } else if (LINE_ID) {
         $linerow = $('.linerow[data-type="' + LINETYPE_NAME + '"][data-id="' + LINE_ID + '"]').first();
     }
 
@@ -169,7 +171,7 @@
         selectOneLine.call($linerow);
     } else {
         if (LINE_ID) {
-            window.history.pushState({}, document.title, pagelink());
+            window.history.pushState({}, document.title, pagelink(LINETYPE_NAME, LINE_ID, childpath));
         }
 
         jarsOnResize();

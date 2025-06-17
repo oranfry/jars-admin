@@ -39,6 +39,13 @@ window.selectOneLine = function() {
     var id = $linerow.attr('data-id');
     var $line = $('.line[data-type="' + linetype + '"]');
 
+    if (!childpath.length) {
+        window.LINETYPE_NAME = linetype;
+        window.LINE_ID = id;
+    } else {
+        childpath[childpath.length - 1].id = id;
+    }
+
     $('.linerow').not($linerow).removeClass('selected').find('.select-column [type="checkbox"]').prop('checked', false);
 
     $linerow.addClass('selected').find('.select-column [type="checkbox"]').prop('checked', true);
@@ -78,9 +85,24 @@ window.selectOneLine = function() {
         }
     }
 
-    window.history.pushState({}, document.title, pagelink(linetype, id));
+    window.history.pushState({}, document.title, pagelink(LINETYPE_NAME, LINE_ID, childpath));
 
-    $('.rawline').attr('href', BASEPATH + '/raw/' + REPORT_NAME + '/' + GROUP_NAME + ':' + linetype + '/' + id).show();
+    let childpath_r = childpath.map(function (item) {
+        return item.property + (item.id && '/' + item.id || '');
+    }).join('/');
+
+    let suffix = childpath_r && '/' + childpath_r || '';
+
+    $line
+        .find('.rawline')
+        .attr('href', BASEPATH + '/raw/' + REPORT_NAME + '/' + GROUP_NAME + ':' + LINETYPE_NAME + '/' + LINE_ID + suffix)
+        .show();
+
+    $line.find('.childrenlink').each(function () {
+        $(this)
+            .attr('href', pagelink(LINETYPE_NAME, LINE_ID, childpath) + '/' + $(this).data('property'))
+            .show();
+    });
 
     window.jarsOnResize();
 };

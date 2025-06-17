@@ -1,6 +1,7 @@
 <?php
 
 use \jars\Report;
+use jars\admin\Helper;
 use jars\contract\Constants;
 use obex\Obex;
 
@@ -62,9 +63,11 @@ $lines = &$data;
 $pos = array_search(GROUP_NAME, $groups);
 $prevGroup = $pos !== false && $pos > 0 ? $groups[$pos - 1] : null;
 $nextGroup = $pos !== false && $pos < count($groups) - 1 ? $groups[$pos + 1] : null;
+$childpath = Helper::parseChildPath($jars, CHILDPATH, LINETYPE_NAME, LINE_ID, $lines, $linetypes);
 
 return compact(
     'base_version',
+    'childpath',
     'fields',
     'groups',
     'jars',

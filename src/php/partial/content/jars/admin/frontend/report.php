@@ -2,7 +2,12 @@
 
 use obex\Obex;
 
-?><script>let base_version = '<?= $base_version ?>';</script><?php
+echo '<script>';
+
+?>let base_version = '<?= $base_version ?>';<?php
+?>let childpath = <?= json_encode($childpath) ?>;<?php
+
+echo '</script>';
 
 ?><div class="sidebar" id="sidebar" data-area-margin="15" data-area-maxwidth="150"><?php
     ?><nav><?php
@@ -132,6 +137,18 @@ foreach ($groups as $i => $groupset) {
             ?><?= count($lines) ?> lines<?php
             ?>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?php
             ?><a href="<?= BASEPATH ?>/raw/<?= REPORT_NAME ?>/<?= GROUP_NAME ?>">raw editor</a><?php
+
+            if (CHILDPATH) {
+                ?>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?php
+                $parentpath = $childpath;
+                array_pop($parentpath);
+
+                $parentpath_r = implode('/', array_map(fn ($item) => $item->property . '/' . $item->id, $parentpath));
+                $suffix = $parentpath_r ? '/' . $parentpath_r : null;
+
+                ?><a href="<?= BASEPATH ?>/report/<?= REPORT_NAME ?>/<?= GROUP_NAME ?>:<?= LINETYPE_NAME ?>/<?= LINE_ID . $suffix ?>">back</a><?php
+            }
+
         ?></div><?php
     }
 
@@ -208,6 +225,23 @@ if (@$linetypes) {
                         ?><div style="clear: both"></div><?php
                         ?><br><?php
                     ?></div><?php
+
+                    if ($children = array_filter($linetype->children, fn ($child) => isset($line->{$child->property}))) {
+                        ?><div class="form-row"><?php
+                            ?><div class="form-row__label">&nbsp;</div><?php
+                            ?><div class="form-row__value"><?php
+                                foreach ($children as $child) {
+                                    ?><a class="childrenlink" data-property="<?= $child->property ?>"><?php
+
+                                    echo $child->property;
+
+                                    ?></a><br><?php
+                                }
+                            ?></div><?php
+                            ?><div style="clear: both"></div><?php
+                            ?><br><?php
+                        ?></div><?php
+                    }
                 ?></form><?php
             ?></div><?php
         }
