@@ -51,6 +51,19 @@
             line[$(this).attr('name')] = value !== '' && Number(value) || null;
         });
 
+        // for saving in context of a parent, wrap in the parent unless the only_parent is present
+
+        let topChild = childpath[childpath.length - 1];
+
+        let nestedProperty = null;
+
+        if (context_line && (!topChild.only_parent || !line[topChild.only_parent])) {
+            let children = [line];
+            line = JSON.parse(JSON.stringify(context_line));
+            line[topChild.property] = children;
+            nestedProperty = topChild.property;
+        }
+
         var handleSave = function() {
             $.ajax(BASEPATH + '/ajax/save', {
                 method: 'post',
@@ -59,6 +72,13 @@
                 data: JSON.stringify([line]),
                 headers: {'X-Base-Version': base_version},
                 success: function(response, status, request) {
+                    let savedId;
+
+                    if (nestedProperty && topChild.id !== (savedId = response[0][nestedProperty][0].id)) {
+                        topChild.id = savedId;
+                        window.history.pushState({}, document.title, pagelink(LINETYPE_NAME, LINE_ID, childpath));
+                    }
+
                     if ('URLSearchParams' in window) {
                         var searchParams = new URLSearchParams(window.location.search);
                         searchParams.set("version", request.getResponseHeader('X-Version'));

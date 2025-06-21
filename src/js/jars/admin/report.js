@@ -39,11 +39,11 @@ window.selectOneLine = function() {
     var id = $linerow.attr('data-id');
     var $line = $('.line[data-type="' + linetype + '"]');
 
-    if (!childpath.length) {
+    if (childpath.length) {
+        childpath[childpath.length - 1].id = id;
+    } else {
         window.LINETYPE_NAME = linetype;
         window.LINE_ID = id;
-    } else {
-        childpath[childpath.length - 1].id = id;
     }
 
     $('.linerow').not($linerow).removeClass('selected').find('.select-column [type="checkbox"]').prop('checked', false);
@@ -120,7 +120,16 @@ window.selectEmptyLine = function() {
     $('.line').not($line).hide();
     $('.rawline').removeAttr('href').hide();
 
-    window.history.pushState({}, document.title, pagelink());
+    $('.linerow').removeClass('selected').find('.select-column [type="checkbox"]').prop('checked', false);
+
+    if (childpath.length) {
+        childpath[childpath.length - 1].id = null;
+    } else {
+        window.LINETYPE_NAME = null;
+        window.LINE_ID = null;
+    }
+
+    window.history.pushState({}, document.title, pagelink(LINETYPE_NAME, LINE_ID, childpath));
 
     window.jarsOnResize();
 };

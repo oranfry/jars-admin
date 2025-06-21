@@ -6,6 +6,7 @@ echo '<script>';
 
 ?>let base_version = '<?= $base_version ?>';<?php
 ?>let childpath = <?= json_encode($childpath) ?>;<?php
+?>let context_line = <?= json_encode($context) ?>;<?php
 
 echo '</script>';
 

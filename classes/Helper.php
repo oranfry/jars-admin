@@ -6,7 +6,7 @@ use obex\Obex;
 
 class Helper
 {
-    public static function parseChildPath(object $jars, string $childpath_string, string $linetype, string $id, array &$lines, array &$linetypes, &$me = null): array
+    public static function parseChildPath(object $jars, string $childpath_string, string $linetype, string $id, array &$lines, array &$linetypes, &$me = null, &$context = null): array
     {
         if (!$childpath_string) {
             return [];
@@ -17,30 +17,30 @@ class Helper
             ->find('type', 'is', $linetype);
 
         if (!$me) {
-            throw new Exception('No such line to drill into (1)');
+            return [];
         }
 
         $myLinetype = Obex::from($linetypes)
             ->find('name', 'is', $linetype);
 
         for ($_childpath = $childpath_string; preg_match('/^(\/([a-z]+))/', $_childpath, $matches); ) {
+            $context = $me;
             $_childpath = substr($_childpath, strlen($matches[1]));
 
             $property = $matches[2];
             $id = null;
 
-            if (preg_match('/^(\/([0-9a-f]{64}))/', $_childpath, $matches)) {
-                $_childpath = substr($_childpath, strlen($matches[1]));
-                $id = $matches[2];
-            } elseif ($_childpath) {
-                throw new Exception('Invalid child path ' . $_childpath);
-            }
+            preg_match('/^(\/([0-9a-f]{64}))/', $_childpath, $matches);
+
+            $_childpath = substr($_childpath, strlen($matches[1]));
+            $id = $matches[2];
 
             $child = Obex::from($myLinetype->children)
                 ->find('property', 'is', $property);
 
             $lines = $me->$property;
             $linetype = $child->linetype;
+            $only_parent = $child->only_parent;
 
             $linetypes = Obex::from($jars->linetypes())
                 ->filter('name', 'is', $linetype)
@@ -50,16 +50,21 @@ class Helper
                 $me = Obex::from($lines)
                     ->filter('id', 'is', $id)
                     ->find('type', 'is', $linetype);
-
-                if (!$me) {
-                    throw new Exception('No such line to drill into (2)');
-                }
             }
 
             $myLinetype = Obex::from($linetypes)
                 ->find('name', 'is', $linetype);
 
-            $childpath[] = (object) compact('property', 'linetype', 'id');
+            $childpath[] = (object) compact(
+                'id',
+                'linetype',
+                'only_parent',
+                'property',
+            );
+
+            if (!$me) {
+                break;
+            }
         }
 
         return $childpath;
