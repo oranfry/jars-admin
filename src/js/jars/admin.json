@@ -2,5 +2,6 @@
     "src/js/jars/admin/cookies.js",
     "src/js/jars/admin/report.js",
     "src/js/jars/admin/selecting.js",
-    "src/js/jars/admin/login.js"
+    "src/js/jars/admin/login.js",
+    "src/js/jars/admin/nav.js"
 ]

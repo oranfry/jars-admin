@@ -30,10 +30,10 @@ class Helper
             $property = $matches[2];
             $id = null;
 
-            preg_match('/^(\/([0-9a-f]{64}))/', $_childpath, $matches);
-
-            $_childpath = substr($_childpath, strlen($matches[1]));
-            $id = $matches[2];
+            if (preg_match('/^(\/([0-9a-f]{64}))/', $_childpath, $matches)) {
+                $_childpath = substr($_childpath, strlen($matches[1]));
+                $id = $matches[2];
+            }
 
             $child = Obex::from($myLinetype->children)
                 ->find('property', 'is', $property);

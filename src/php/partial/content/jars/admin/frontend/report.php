@@ -10,27 +10,15 @@ echo '<script>';
 
 echo '</script>';
 
-?><div class="sidebar" id="sidebar" data-area-margin="15" data-area-maxwidth="150"><?php
-    ?><nav><?php
-        foreach ($reports as $report) {
-            ?><a<?php
+$menus = [];
 
-            ?> href="<?= BASEPATH ?>/report/<?= $report->name ?>"<?php
-
-            // why the first condition here?
-
-            if (PAGE == 'jars/admin/frontend/report' && REPORT_NAME == $report->name) {
-                ?> class="current"<?php
-            }
-
-            ?>><?php
-
-            echo $report->name
-
-            ?></a><?php
-        }
-    ?></nav><?php
-?></div><?php
+$menus[] = array_map(function ($report) {
+    return [
+        'href' => BASEPATH . '/report/' . $report->name,
+        'text' => $report->name,
+        'current' => PAGE == 'jars/admin/frontend/report' && REPORT_NAME == $report->name,
+    ];
+}, $reports);
 
 $pieces = [];
 
@@ -38,34 +26,108 @@ foreach ($groups as $i => $groupset) {
     $selected = preg_replace(',/$,', '', $path[$i] ?? '');
 
     if (count($groupset)) {
-        ?><div class="sidebar" id="sidebar" data-area-margin="15" data-area-maxwidth="150"><?php
-            ?><nav><?php
-                foreach ($groupset as $group_name) {
-                    ?><a<?php
-                    ?> href="<?= BASEPATH ?>/report/<?= REPORT_NAME ?>/<?= ($prefix = implode('/', $pieces)) ? $prefix . '/' : null ?><?= $group_name ?>"<?php
+        $menu = [];
 
-                    if ($group_name == $selected){
+        foreach ($groupset as $group_name) {
+            $text = $group_name;
+
+            if (preg_match('/^[0-9a-f]{64}$/', $text)) {
+                $text = substr($text, 0, 7);
+            }
+
+            $current = $group_name == $selected;
+            $href = BASEPATH . '/report/' . REPORT_NAME . '/' . (($prefix = implode('/', $pieces)) ? $prefix . '/' : null) . $group_name;
+
+            $menu[] = compact('href', 'text', 'current');
+
+            if ($current) {
+                $base_href = $href;
+            }
+        }
+
+        $menus[] = $menu;
+    }
+
+    $pieces[] = $selected;
+}
+
+if (LINE_ID) {
+    $base_href .= ':' . LINETYPE_NAME . '/' . LINE_ID;
+
+    $menus[] = [[
+        'href' => $base_href,
+        'text' => LINETYPE_NAME . '/' . substr(LINE_ID, 0, 7),
+        'current' => true,
+    ]];
+}
+
+if ($childpath) {
+    foreach ($childpath as $child) {
+        $menus[] = [[
+            'href' => $base_href .= '/' . $child->property,
+            'text' => $child->property,
+            'current' => true,
+        ]];
+
+        if ($child->id) {
+            $display = $child->id ?? '??';
+
+            if (preg_match('/^[0-9a-f]{64}$/', $display)) {
+                $display = substr($display, 0, 7);
+            }
+
+            $menus[] = [[
+                'href' => $base_href .= '/' . $child->id,
+                'text' => $display,
+                'current' => true,
+            ]];
+        }
+    }
+}
+
+?><div class="sidebar" id="sidebar" data-area-margin="15" data-area-maxwidth="150"><?php
+    foreach ($menus as $i => $menu) {
+        ?><nav><?php
+            if ($i === count($menus) - 1 || count($menu) === 1) { // last menu
+                foreach ($menu as $item) {
+                    ?><a<?php
+
+                    ?> href="<?= $item['href'] ?>"<?php
+
+                    if ($item['current']) {
                         ?> class="current"<?php
                     }
 
                     ?>><?php
 
-                    $display = $group_name;
-
-                    if (preg_match('/^[0-9a-f]{64}$/', $group_name)) {
-                        $display = substr($display, 0, 7) . '&hellip;';
-                    }
-
-                    echo $display;
+                    echo $item['text']
 
                     ?></a><?php
                 }
-            ?></nav><?php
-        ?></div><?php
-    }
+            } else {
+                ?><select<?php
+                ?> class="navigable current"<?php
+                ?> data-url="<?= BASEPATH ?>/report/%"<?php
+                ?>><?php
 
-    $pieces[] = $selected;
-}
+                foreach ($menu as $i => $item) {
+                    ?><option<?php
+
+                    ?> value="<?= $i ?>"<?php
+                    ?> data-url="<?= $item['href'] ?>"<?php
+
+                    if ($item['current']) {
+                        ?> class="current" selected="selected"<?php
+                    }
+
+                    ?>><?= $item['text'] ?></option><?php
+                }
+
+                ?></select><?php
+            }
+        ?></nav><?php
+    }
+?></div><?php
 
 ?><div class="area list-area" id="list-area"><?php
     if (count(@$warnings ?: [])) {

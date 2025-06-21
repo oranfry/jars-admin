@@ -9,36 +9,44 @@ nav a {
     white-space: nowrap;
 }
 
-.sidebar h3, nav a {
+nav select {
+    font-size: inherit;
+    display: block;
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+}
+
+.sidebar h3, nav a, nav select {
     padding: 6px 15px;
 }
 
-.sidebar h3:first-child, nav a:first-child {
+.sidebar h3:first-child, nav a:first-child, nav select:first-child {
     margin-top: 12px;
 }
 
-.sidebar h3:last-child, nav a:last-child {
+.sidebar h3:last-child, nav a:last-child, nav select:last-child {
     margin-bottom: 12px;
 }
 
-
 @media (prefers-color-scheme: light) {
-    nav a {
+    nav a, nav select {
         color: #333;
     }
 
-    nav a.current {
+    nav a.current, nav select.current {
         background-color: white;
         color: #333;
     }
 }
 
 @media (prefers-color-scheme: dark) {
-    nav a {
+    nav a, nav select {
         color: #cdcdcd;
     }
 
-    nav a.current {
+    nav a.current, nav select.current {
         background-color: #ddd;
         color: #333;
     }
