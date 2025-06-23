@@ -45,7 +45,7 @@ if (GROUP_NAME) {
 $data = $jars->group(REPORT_NAME, GROUP_NAME, @$min);
 $base_version = $jars->version();
 
-if ($jars->report(REPORT_NAME)->is_derived()) {
+if ($report->is_derived) {
     return compact(
         'base_version',
         'data',
