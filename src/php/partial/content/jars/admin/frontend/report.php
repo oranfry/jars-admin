@@ -29,7 +29,7 @@ foreach ($groups as $i => $groupset) {
         $menu = [];
 
         foreach ($groupset as $group_name) {
-            $text = $group_name;
+            $text = $group_name ?: '[default group]';
 
             if (preg_match('/^[0-9a-f]{64}$/', $text)) {
                 $text = substr($text, 0, 7);

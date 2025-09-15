@@ -15,13 +15,15 @@ $min = @$_GET['version'];
 $groups = [];
 $path = [];
 
-foreach (explode('/', GROUP_NAME . (GROUP_NAME ? '/' : null) . 'fake') as $part) {
+foreach (explode('/', GROUP_NAME ? GROUP_NAME . '/fake' : '') as $part) {
     $prefix = ($prefix = implode('/', $path)) ? $prefix . '/' : '';
-    $groups[] = array_filter($jars->groups(REPORT_NAME, $prefix, $min), fn ($g) => $g !== '');
+    $groups[] = $jars->groups(REPORT_NAME, $prefix, $min); //array_filter($jars->groups(REPORT_NAME, $prefix, $min), fn ($g) => $g !== '');
     $path[] = $part;
 }
 
-array_pop($path);
+if (GROUP_NAME) {
+    array_pop($path);
+}
 
 $fields = $report->fields;
 
@@ -44,10 +46,14 @@ if (GROUP_NAME) {
 
 $data = $jars->group(REPORT_NAME, GROUP_NAME, @$min);
 $base_version = $jars->version();
+$childpath = [];
+$context = null;
 
 if ($report->is_derived) {
     return compact(
         'base_version',
+        'childpath',
+        'context',
         'data',
         'groups',
         'jars',
