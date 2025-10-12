@@ -47,8 +47,13 @@
 
         $form.find('input[type="number"]').each(function() {
             let value = $(this).val();
+            let number = null;
 
-            line[$(this).attr('name')] = value !== '' && Number(value) || null;
+            if (value !== '') {
+                number = Number(value);
+            }
+
+            line[$(this).attr('name')] = number;
         });
 
         // for saving in context of a parent, wrap in the parent unless the only_parent is present
@@ -134,8 +139,7 @@
         var $line = $(this).closest('.line');
         var linetype = $line.attr('data-type');
         var $form = $(this).closest('form');
-        var formData = new FormData($form[0]);
-        var id = Object.fromEntries(formData).id;
+        var id = Object.fromEntries(new FormData($form[0])).id;
 
         line = {
             type: linetype,
