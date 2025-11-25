@@ -28,7 +28,9 @@ if (isset($body_class)) {
         }
 
         foreach (PAGE_PARAMS as $key => $value) {
-            ?>window.<?= "{$key} = '{$value}'"; ?>;<?php
+            if (is_scalar($value)) {
+                ?>window.<?= "{$key} = '{$value}'"; ?>;<?php
+            }
         }
 
         if ($jars->token()) {
