@@ -22,7 +22,7 @@ window.setCookie = function(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; path=" + HOMEPATH + "; " + expires;
+    document.cookie = cname + "=" + cvalue + "; path=" + JARS_ADMIN_HOMEPATH + "; " + expires;
 };
 
 window.deleteCookie = function(cname) {

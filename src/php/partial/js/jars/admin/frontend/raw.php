@@ -22,7 +22,7 @@
             }
         }
 
-        $.ajax(BASEPATH + '/ajax/save', {
+        $.ajax(JARS_ADMIN_BASEPATH + '/ajax/save', {
             method: 'post',
             contentType: false,
             processData: false,

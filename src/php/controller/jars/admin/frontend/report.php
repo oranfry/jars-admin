@@ -6,7 +6,7 @@ use obex\Obex;
 $reports = $jars->reports();
 
 if (!$report = Obex::find($reports, 'name', 'is', REPORT_NAME)) {
-    header('Location: ' . HOMEPATH);
+    header('Location: ' . JARS_ADMIN_HOMEPATH);
     die();
 }
 
@@ -31,7 +31,7 @@ if (GROUP_NAME && 0 <= $index = count($groups) - 2) {
     $last_groups = $groups[$index];
 
     if (!in_array(basename(GROUP_NAME), $last_groups)) {
-        header('Location: ' . BASEPATH . '/report/' . REPORT_NAME);
+        header('Location: ' . JARS_ADMIN_BASEPATH . '/report/' . REPORT_NAME);
 
         die();
     }

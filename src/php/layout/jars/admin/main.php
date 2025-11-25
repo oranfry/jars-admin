@@ -20,8 +20,8 @@ if (isset($body_class)) {
     ss_require('src/php/partial/content/' . (defined('VIEW') ? VIEW : PAGE) . '.php', $viewdata);
 
     ?><script><?php
-        ?>window.BASEPATH = '<?= BASEPATH ?>';<?php
-        ?>window.HOMEPATH = '<?= HOMEPATH ?>';<?php
+        ?>window.JARS_ADMIN_BASEPATH = '<?= JARS_ADMIN_BASEPATH ?>';<?php
+        ?>window.JARS_ADMIN_HOMEPATH = '<?= JARS_ADMIN_HOMEPATH ?>';<?php
 
         if (defined('BACK') && BACK) {
             ?>window.BACK = '<?= BACK ?>';<?php

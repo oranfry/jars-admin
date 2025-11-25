@@ -95,7 +95,7 @@ window.selectOneLine = function() {
 
     $line
         .find('.rawline')
-        .attr('href', BASEPATH + '/raw/' + REPORT_NAME + '/' + GROUP_NAME + ':' + LINETYPE_NAME + '/' + LINE_ID + suffix)
+        .attr('href', JARS_ADMIN_BASEPATH + '/raw/' + REPORT_NAME + '/' + GROUP_NAME + ':' + LINETYPE_NAME + '/' + LINE_ID + suffix)
         .show();
 
     $line.find('.childrenlink').each(function () {

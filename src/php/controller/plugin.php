@@ -1,11 +1,11 @@
 <?php
 
-if (!defined('BASEPATH')) {
-    define('BASEPATH', '');
+if (!defined('JARS_ADMIN_BASEPATH')) {
+    define('JARS_ADMIN_BASEPATH', '');
 }
 
-if (!defined('HOMEPATH')) {
-    define('HOMEPATH', '/');
+if (!defined('JARS_ADMIN_HOMEPATH')) {
+    define('JARS_ADMIN_HOMEPATH', '/');
 }
 
 return [];

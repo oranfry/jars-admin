@@ -17,7 +17,7 @@ if ($token = @$_COOKIE['token']) {
             throw new Exception('No reports!');
         }
 
-        header('Location: ' . BASEPATH . '/report/' . reset($reports)->name);
+        header('Location: ' . JARS_ADMIN_BASEPATH . '/report/' . reset($reports)->name);
 
         die('Redirecting...');
     }

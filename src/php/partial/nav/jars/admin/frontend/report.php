@@ -9,7 +9,7 @@
         <div class="inline-modal listable">
             <div class="inline-dropdown">
                 <?php foreach ($reports as $report) : ?>
-                    <a href="<?= BASEPATH ?>/report/<?= $report->name ?><?= $query ?>" <?= REPORT_NAME == $report->name ? 'class="current"' : '' ?>><?= $report->name ?></a>
+                    <a href="<?= JARS_ADMIN_BASEPATH ?>/report/<?= $report->name ?><?= $query ?>" <?= REPORT_NAME == $report->name ? 'class="current"' : '' ?>><?= $report->name ?></a>
                 <?php endforeach ?>
             </div>
         </div>

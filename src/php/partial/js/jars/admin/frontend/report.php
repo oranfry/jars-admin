@@ -5,7 +5,7 @@
             childpath = [];
         }
 
-        let link = BASEPATH + '/report/' + REPORT_NAME + '/' + GROUP_NAME;
+        let link = JARS_ADMIN_BASEPATH + '/report/' + REPORT_NAME + '/' + GROUP_NAME;
 
         if (linetype && id) {
             link = link + ':' + linetype + '/' + id;
@@ -70,7 +70,7 @@
         }
 
         var handleSave = function() {
-            $.ajax(BASEPATH + '/ajax/save', {
+            $.ajax(JARS_ADMIN_BASEPATH + '/ajax/save', {
                 method: 'post',
                 contentType: false,
                 processData: false,
@@ -148,7 +148,7 @@
         };
 
         if (confirm('delete ' + linetype + ' ' + id + '?')) {
-            $.ajax(BASEPATH + '/ajax/save', {
+            $.ajax(JARS_ADMIN_BASEPATH + '/ajax/save', {
                 method: 'post',
                 contentType: false,
                 processData: false,

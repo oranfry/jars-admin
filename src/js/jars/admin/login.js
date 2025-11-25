@@ -4,7 +4,7 @@ $('#loginform').on('submit', function(e){
     let username = $(this).find('[name="username"]').val();
     let password = $(this).find('[name="password"]').val();
 
-    $.ajax(BASEPATH + '/ajax/login', {
+    $.ajax(JARS_ADMIN_BASEPATH + '/ajax/login', {
         method: 'post',
         contentType: false,
         processData: false,

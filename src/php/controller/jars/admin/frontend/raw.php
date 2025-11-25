@@ -8,7 +8,7 @@ use obex\Obex;
 $reports = $jars->reports();
 
 if (!$report = Obex::find($reports, 'name', 'is', REPORT_NAME)) {
-    header('Location: ' . HOMEPATH);
+    header('Location: ' . JARS_ADMIN_HOMEPATH);
     die();
 }
 

@@ -14,7 +14,7 @@ $menus = [];
 
 $menus[] = array_map(function ($report) {
     return [
-        'href' => BASEPATH . '/report/' . $report->name,
+        'href' => JARS_ADMIN_BASEPATH . '/report/' . $report->name,
         'text' => $report->name,
         'current' => PAGE == 'jars/admin/frontend/report' && REPORT_NAME == $report->name,
     ];
@@ -36,7 +36,7 @@ foreach ($groups as $i => $groupset) {
             }
 
             $current = $group_name == $selected;
-            $href = BASEPATH . '/report/' . REPORT_NAME . '/' . (($prefix = implode('/', $pieces)) ? $prefix . '/' : null) . $group_name;
+            $href = JARS_ADMIN_BASEPATH . '/report/' . REPORT_NAME . '/' . (($prefix = implode('/', $pieces)) ? $prefix . '/' : null) . $group_name;
 
             $menu[] = compact('href', 'text', 'current');
 
@@ -107,7 +107,7 @@ if ($childpath) {
             } else {
                 ?><select<?php
                 ?> class="navigable current"<?php
-                ?> data-url="<?= BASEPATH ?>/report/%"<?php
+                ?> data-url="<?= JARS_ADMIN_BASEPATH ?>/report/%"<?php
                 ?>><?php
 
                 foreach ($menu as $i => $item) {
@@ -199,7 +199,7 @@ if ($childpath) {
         ?><div style="text-align:center; margin-top: 2em"><?php
             ?><?= count($lines) ?> lines<?php
             ?>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?php
-            ?><a href="<?= BASEPATH ?>/raw/<?= REPORT_NAME ?>/<?= GROUP_NAME ?>">raw editor</a><?php
+            ?><a href="<?= JARS_ADMIN_BASEPATH ?>/raw/<?= REPORT_NAME ?>/<?= GROUP_NAME ?>">raw editor</a><?php
 
             if (CHILDPATH) {
                 ?>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?php
@@ -209,7 +209,7 @@ if ($childpath) {
                 $parentpath_r = implode('/', array_map(fn ($item) => $item->property . '/' . $item->id, $parentpath));
                 $suffix = $parentpath_r ? '/' . $parentpath_r : null;
 
-                ?><a href="<?= BASEPATH ?>/report/<?= REPORT_NAME ?>/<?= GROUP_NAME ?>:<?= LINETYPE_NAME ?>/<?= LINE_ID . $suffix ?>">back</a><?php
+                ?><a href="<?= JARS_ADMIN_BASEPATH ?>/report/<?= REPORT_NAME ?>/<?= GROUP_NAME ?>:<?= LINETYPE_NAME ?>/<?= LINE_ID . $suffix ?>">back</a><?php
             }
 
         ?></div><?php
@@ -270,7 +270,7 @@ if (@$linetypes) {
                             ?><div class="form-row__value"><?php
 
                             ss_require(
-                                "src/php/partial/fieldtype/$field->type.php",
+                                "src/php/partial/fieldtype/admin/$field->type.php",
                                 compact('multiline', 'name', 'download', 'dp'),
                             );
 
