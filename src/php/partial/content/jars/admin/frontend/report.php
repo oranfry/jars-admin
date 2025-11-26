@@ -86,6 +86,10 @@ if ($childpath) {
 }
 
 ?><div class="sidebar" id="sidebar" data-area-margin="15" data-area-maxwidth="150"><?php
+    if (defined('TOOLS_PLUGIN_CONFIG')) {
+        ?><nav><a href="/">←</a><?php
+    }
+
     foreach ($menus as $i => $menu) {
         ?><nav><?php
             if ($i === count($menus) - 1 || count($menu) === 1) { // last menu

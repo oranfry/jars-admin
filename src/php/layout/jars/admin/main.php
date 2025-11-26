@@ -1,4 +1,6 @@
-<!DOCTYPE html><?php
+<?php
+
+?><!DOCTYPE html><?php
 
 ?><html lang="en-NZ"><?php
 
