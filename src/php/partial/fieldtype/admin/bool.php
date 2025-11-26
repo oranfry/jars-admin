@@ -1,4 +1,6 @@
-<span></span><?php
+<?php
+
+?><span></span><?php
 
 ?><input<?php
 
