@@ -7,6 +7,8 @@ class ToolsConfig extends \Tools\Config
     public function custom(object $config, ?string $httpMountPoint, ?string $cliMountPoint, array $options): void
     {
         define('JARS_ADMIN_BASEPATH', $httpMountPoint);
+        define('JARS_ADMIN_HOMEPATH', $httpMountPoint);
+
         $config->ledger ??= [];
 
         $config->ledger += [
