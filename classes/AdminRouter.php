@@ -1,8 +1,8 @@
 <?php
 
-namespace jars\admin;
+namespace OranFry\Jars\Admin;
 
-use jars\contract\Constants;
+use OranFry\Jars\Contract\Constants;
 
 class AdminRouter extends \subsimple\Router
 {

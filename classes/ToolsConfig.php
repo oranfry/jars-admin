@@ -1,6 +1,6 @@
 <?php
 
-namespace jars\admin;
+namespace OranFry\Jars\Admin;
 
 class ToolsConfig extends \Tools\Config
 {

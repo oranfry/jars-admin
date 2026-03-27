@@ -1,6 +1,6 @@
 <?php
 
-use jars\admin\Helper;
+use OranFry\Jars\Admin\Helper;
 use obex\Obex;
 
 $reports = $jars->reports();
@@ -45,7 +45,12 @@ if (GROUP_NAME) {
 }
 
 $data = $jars->group(REPORT_NAME, GROUP_NAME, @$min);
-$base_version = $jars->version();
+$base_version = null;
+
+if (!$report->is_derived && $data) {
+    $base_version = @$data[0]->version;
+}
+
 $childpath = [];
 $context = null;
 
