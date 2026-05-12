@@ -4,13 +4,12 @@
             "OranFry\\Jars\\Admin\\": "classes"
         }
     },
-    "minimum-stability": "dev",
     "name": "oranfry/jars-admin",
     "require": {
         "components/jquery": "^3",
         "oranfry/jars-client": "*",
-        "oranfry/jars-contracts": "dev-chain",
-        "oranfry/jars-core": "dev-chain",
+        "oranfry/jars-contracts": "^10.0.0",
+        "oranfry/jars-core": "*",
         "oranfry/obex": "*",
         "oranfry/subsimple": "*"
     }
