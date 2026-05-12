@@ -1,6 +1,6 @@
 <?php
 
-namespace jars\admin;
+namespace OranFry\Jars\Admin;
 
 use obex\Obex;
 

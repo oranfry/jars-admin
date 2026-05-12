@@ -1,17 +1,16 @@
 {
     "autoload": {
         "psr-4": {
-            "jars\\admin\\": "classes"
+            "OranFry\\Jars\\Admin\\": "classes"
         }
     },
-    "minimum-stability": "dev",
-    "name": "oranfry\/jars-admin",
+    "name": "oranfry/jars-admin",
     "require": {
         "components/jquery": "^3",
-        "oranfry\/jars-client": "*",
-        "oranfry\/jars-contracts": "*",
-        "oranfry\/jars-core": "*",
-        "oranfry\/obex": "*",
-        "oranfry\/subsimple": "*"
+        "oranfry/jars-client": "*",
+        "oranfry/jars-contracts": "^10.0.0",
+        "oranfry/jars-core": "*",
+        "oranfry/obex": "*",
+        "oranfry/subsimple": "*"
     }
 }
