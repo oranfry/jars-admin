@@ -1,6 +1,6 @@
 <?php
 
-use jars\admin\Helper;
+use OranFry\Jars\Admin\Helper;
 use obex\Obex;
 
 $reports = $jars->reports();

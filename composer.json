@@ -1,7 +1,7 @@
 {
     "autoload": {
         "psr-4": {
-            "jars\\admin\\": "classes"
+            "OranFry\\Jars\\Admin\\": "classes"
         }
     },
     "minimum-stability": "dev",

@@ -1,8 +1,8 @@
 <?php
 
-use jars\admin\Helper;
-use jars\contract\Constants;
-use jars\Report;
+use OranFry\Jars\Admin\Helper;
+use OranFry\Jars\Contract\Constants;
+use OranFry\Jars\Core\Report;
 use obex\Obex;
 
 $reports = $jars->reports();
