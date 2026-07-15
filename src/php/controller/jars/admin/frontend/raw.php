@@ -3,7 +3,7 @@
 use OranFry\Jars\Admin\Helper;
 use OranFry\Jars\Contract\Constants;
 use OranFry\Jars\Core\Report;
-use obex\Obex;
+use OranFry\Obex\Obex;
 
 $reports = $jars->reports();
 

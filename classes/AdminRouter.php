@@ -4,7 +4,7 @@ namespace OranFry\Jars\Admin;
 
 use OranFry\Jars\Contract\Constants;
 
-class AdminRouter extends \subsimple\Router
+class AdminRouter extends \OranFry\Subsimple\Router
 {
     const CHILDPATH_PATTERN = '(?:/[a-z]+/[a-f0-9]{64})*(?:/[a-z]+)?';
 

@@ -2,7 +2,7 @@
 
 namespace OranFry\Jars\Admin;
 
-use obex\Obex;
+use OranFry\Obex\Obex;
 
 class Helper
 {

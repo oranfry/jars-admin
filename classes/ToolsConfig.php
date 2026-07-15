@@ -2,7 +2,7 @@
 
 namespace OranFry\Jars\Admin;
 
-class ToolsConfig extends \Tools\Config
+class ToolsConfig extends \OranFry\Tools\Config
 {
     public function custom(object $config, ?string $httpMountPoint, ?string $cliMountPoint, array $options): void
     {
