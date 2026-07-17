@@ -1,6 +1,6 @@
 <?php
 
-use obex\Obex;
+use OranFry\Obex\Obex;
 
 echo '<script>';
 
