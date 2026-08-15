@@ -5,13 +5,14 @@
         }
     },
     "minimum-stability": "dev",
-    "name": "oranfry\/jars-admin",
+    "name": "oranfry/jars-admin",
     "require": {
         "components/jquery": "^3",
-        "oranfry\/jars-client": "*",
-        "oranfry\/jars-contracts": "*",
-        "oranfry\/jars-core": "*",
-        "oranfry\/obex": "*",
-        "oranfry\/subsimple": "*"
+        "oranfry/jars-client": "*",
+        "oranfry/jars-contracts": "*",
+        "oranfry/jars-core": "*",
+        "oranfry/ledger": "*",
+        "oranfry/obex": "*",
+        "oranfry/subsimple": "*"
     }
 }

@@ -1,9 +1,2 @@
-node_modules
-plugins
-public/build
-vendor
-
 *.sublime-workspace
 .php_cs.cache
-latest.json
-machine.php

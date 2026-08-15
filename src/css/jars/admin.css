@@ -1,0 +1,46 @@
+.raw {
+    padding: 1em;
+}
+
+textarea.raw:not(.fullarea) {
+    width: 100%;
+    height: 40em;
+}
+
+textarea.raw.fullarea {
+    border: none;
+    width: 100%;
+    height: 100vh;
+}
+
+@media (prefers-color-scheme: light) {
+    .raw {
+        background: white;
+        color: #333;
+    }
+
+    .raw:not(.fullarea) {
+        border: 1px solid #999;
+    }
+
+    input, textarea {
+        background-color: white;
+        color: #333;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    input, textarea {
+        background-color: #333;
+        color: #cdcdcd;
+    }
+
+    .raw {
+        background: #111;
+        color: white;
+    }
+
+    .raw:not(.fullarea) {
+        border: 1px solid #555;
+    }
+}

@@ -9,20 +9,19 @@ class ToolsConfig extends \OranFry\Tools\Config
         define('JARS_ADMIN_BASEPATH', $httpMountPoint);
         define('JARS_ADMIN_HOMEPATH', $httpMountPoint);
 
-        $config->ledger ??= [];
-
-        $config->ledger += [
-            'accounts' => \OranFry\Ledgers\Accounts::class,
-            'balance' => \OranFry\Ledgers\Balance::class,
-            'bank' => \OranFry\Ledgers\Bank::class,
-            'gst' => \OranFry\Ledgers\Gst::class,
-            'income' => \OranFry\Ledgers\Income::class,
+        $config->ledger = ($config->ledger ?? []) + [
+            'report' => ReportLedger::class,
         ];
     }
 
     public function includePath(): ?string
     {
         return 'vendor/oranfry/jars-admin';
+    }
+
+    public function requires(): array
+    {
+        return ['vendor/oranfry/ledger'];
     }
 
     public function router(): string
