@@ -1,4 +1,4 @@
-let makeUrl = function (data) {
+let window.adminMakeUrl = function (data) {
     let groupParts = [];
 
     for (let i = 0;; i++) {
@@ -50,8 +50,6 @@ let makeUrl = function (data) {
 
     return url;
 };
-
-window.customRefreshUrl = makeUrl;
 
 let findChildPropertyOptions = function (level, childPathDepth, children) {
     if (level === childPathDepth) {

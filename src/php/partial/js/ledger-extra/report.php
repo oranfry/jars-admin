@@ -20,6 +20,7 @@ if (LINE_ID) {
 ?>window.reportLinetypes = <?= json_encode($ledger->linetypeDetails()) ?>;<?php
 ?>window.context = <?= json_encode($ledger->context()) ?>;<?php
 
+?>window.customRefreshUrl = adminMakeUrl;<?php
 ?>window.postRefreshLineEditor = (window.postRefreshLineEditor ?? []).concat([refreshLineCvs]);<?php
 ?>window.ledgerUnmapLine = (window.ledgerUnmapLine ?? []).concat([adminUnmapLine]);<?php
 ?>window.ledgerPostSave = (window.ledgerPostSave ?? []).concat([adminPostSave]);<?php
