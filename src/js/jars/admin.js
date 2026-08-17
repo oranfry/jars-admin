@@ -49,6 +49,10 @@
         delete(data.report__value);
         delete(data.line__value);
 
+        if (data.showas__value === 'list') {
+            delete(data.showas__value);
+        }
+
         return url;
     };
 
@@ -69,7 +73,7 @@
     };
 
     window.refreshLineCvs = function() {
-        if (window.contextVariableSets.raw__value === '1') {
+        if (window.contextVariableSets.showas__value === 'raw') {
             return;
         }
 

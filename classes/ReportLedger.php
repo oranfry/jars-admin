@@ -19,7 +19,6 @@ class ReportLedger extends \OranFry\Tools\JarsAwareLedgerConfig
     protected ChildNavigator $childpath;
     protected Value $line;
     protected Value $reportSelector;
-    protected Value $raw;
     protected ?array $fields = null;
     protected array $lines = [];
     protected array $linetypes = [];
@@ -37,7 +36,7 @@ class ReportLedger extends \OranFry\Tools\JarsAwareLedgerConfig
 
         $reports = $this->jars->reports();
 
-        $rawValueBackup = (bool) @$_GET['raw__value'];
+        $showasRaw = @$_GET['showas__value'] === 'raw';
 
         $_GET = [];
 
@@ -60,8 +59,6 @@ class ReportLedger extends \OranFry\Tools\JarsAwareLedgerConfig
         $this->path = new GroupNavigator('path', [
             'jars' => $this->jars,
             'report' => $this->reportSelector->value,
-            'alignment' => 'stacked',
-            'auto_advance' => 0,
             'manips' => 'line=&childpath=',
         ]);
 
@@ -138,17 +135,9 @@ class ReportLedger extends \OranFry\Tools\JarsAwareLedgerConfig
             ->find('name', 'is', $this->reportSelector->value)
             ->linetypes;
 
-        if ($rawValueBackup) {
-            $_GET['raw__value'] = 1;
-        }
+        if ($showasRaw) {
+            $_GET['showas__value'] = 'raw';
 
-        $this->raw = new Value('raw', [
-            'options' => ['Yes' => 1],
-            'label' => '',
-            'select' => true,
-        ]);
- 
-        if ($this->raw->value) {
             $onlyId = $this->childpath->value ? end($this->childpath->value)->id : LINE_ID;
 
             if ($onlyId) {
@@ -222,7 +211,7 @@ class ReportLedger extends \OranFry\Tools\JarsAwareLedgerConfig
 
     public function showas(): array
     {
-        return $this->raw->value ? ['raw'] : ['list'];
+        return ['list', 'raw'];
     }
 
     public function title(): string
@@ -259,7 +248,6 @@ class ReportLedger extends \OranFry\Tools\JarsAwareLedgerConfig
             $this->path,
             $this->line,
             $this->childpath,
-            $this->raw,
         ];
     }
 }
