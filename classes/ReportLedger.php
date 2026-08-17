@@ -48,7 +48,6 @@ class ReportLedger extends \OranFry\Tools\JarsAwareLedgerConfig
             'options' => $reportOptions,
             'nullable' => false,
             'label' => '',
-            'select' => true,
             'manips' => 'path=&line=&childpath=',
         ]);
 
@@ -71,7 +70,6 @@ class ReportLedger extends \OranFry\Tools\JarsAwareLedgerConfig
 
         $this->line = new Value('line', [
             'options' => $lineOptions,
-            'select' => true,
             'manips' => 'childpath=',
             'value' =>  LINE_ID ? LINETYPE_NAME . '/' . LINE_ID : null,
         ]);
