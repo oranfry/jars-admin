@@ -10,11 +10,8 @@ use OranFry\Obex\Obex;
 use OranFry\Tools\ContextVariableSets\GroupNavigator;
 use OranFry\Tools\ContextVariableSets\ChildNavigator;
 
-class ReportLedger extends \OranFry\Tools\JarsAwareLedgerConfig
+class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
 {
-    protected ?int $base_version;
-    protected ?int $version;
-    protected Client $jars;
     protected GroupNavigator $path;
     protected ChildNavigator $childpath;
     protected Value $line;
@@ -24,11 +21,9 @@ class ReportLedger extends \OranFry\Tools\JarsAwareLedgerConfig
     protected array $linetypes = [];
     protected array $linetypeDetails = [];
 
-    public function __construct(array $viewdata, ?int $version = null)
+    public function __construct(array $viewdata)
     {
-        parent::__construct($viewdata, $version);
-
-        $this->version = $version;
+        parent::__construct($viewdata);
 
         if (SUBSIMPLE_METHOD === 'POST') {
             return; // ajax saving etc.
@@ -83,6 +78,8 @@ class ReportLedger extends \OranFry\Tools\JarsAwareLedgerConfig
             implode('/', $this->path->value),
             $this->version,
         );
+
+        $this->base_version = $this->jars->version();
 
         $line = LINE_ID ? Obex::from($this->lines)
             ->filter('type', 'is', LINETYPE_NAME)
@@ -162,10 +159,8 @@ class ReportLedger extends \OranFry\Tools\JarsAwareLedgerConfig
         return true;
     }
 
-    public function lines(?int &$base_version = null): ?array
+    public function lines(): ?array
     {
-        $base_version = $this->jars->version();
-
         return $this->lines;
     }
 
