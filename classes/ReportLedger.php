@@ -21,13 +21,9 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
     protected array $linetypes = [];
     protected array $linetypeDetails = [];
 
-    public function __construct(array $viewdata)
+    public function init(array $viewdata): void
     {
-        parent::__construct($viewdata);
-
-        if (SUBSIMPLE_METHOD === 'POST') {
-            return; // ajax saving etc.
-        }
+        parent::init($viewdata);
 
         $reports = $this->jars->reports();
 
@@ -85,7 +81,7 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
             ->filter('type', 'is', LINETYPE_NAME)
             ->find('id', 'is', LINE_ID) : null;
 
-        $childpathPieces = explode('/', ltrim(CHILDPATH, '/'));
+        $childpathPieces = explode('/', ltrim(CHILDPATH ?? '', '/'));
 
         for ($i = 0; $property = array_shift($childpathPieces); $i++) {
             $_GET['childpath__property_' . $i] = $property;
@@ -104,9 +100,9 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
             'linetypes' => &$this->linetypes,
         ]);
 
-        $report = Obex::find($reports, 'name', 'is', $this->reportSelector->value);
-
-        if (!count($this->childpath->info)) {
+        if (count($this->childpath->info)) {
+            $this->fields = [(object) ['name' => 'id|start(6)', 'type' =>'string']];
+        } else {
             $extra = $this->jars->extra('reportMeta');
 
             $this->fields = [];
@@ -151,7 +147,7 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
 
     public function fields(): array
     {
-        return $this->fields ?? [(object) ['name' => 'id|start(6)', 'type' =>'string']];
+        return $this->fields;
     }
 
     public function hideTitle(): bool
@@ -175,10 +171,6 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
 
         foreach ($linetypes as $linetype) {
             $linetypeMeta = $this->jars->extra('linetypeMeta')[$linetype->name] ?? [];
-
-            // $newline_fields = $extra['respect_newline_fields'][$linetype->name] ?? [];
-            // $download_fields = $extra['download_fields'][$linetype->name] ?? [];
-            // $float_dp = $extra['float_dp'][$linetype->name] ?? [];
 
             foreach ($linetype->fields as $field) {
                 $fieldMeta = $linetypeMeta['fields'][$field->name] ?? null;
