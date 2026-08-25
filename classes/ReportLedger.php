@@ -7,6 +7,7 @@ use OranFry\ContextVariableSets\Value;
 use OranFry\Jars\Contract\Client;
 use OranFry\Jars\Core\Report;
 use OranFry\Obex\Obex;
+use OranFry\Ledger\Exception;
 use OranFry\Tools\ContextVariableSets\GroupNavigator;
 use OranFry\Tools\ContextVariableSets\ChildNavigator;
 
@@ -145,6 +146,31 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
         ];
     }
 
+    public function download(string $linetype_name, string $line_id, ?string $field_name): ?object
+    {
+        if (null === $field_name) {
+            throw new Exception('Unsupported');
+        }
+
+        $download = @$this->jars->extra('linetypeMeta')[$linetype_name]['fields'][$field_name]['download'];
+        $record_table = @$download['table'];
+
+        if (!$record_table) {
+            throw new Exception('Could not determine record_table for download');
+        }
+
+        $line = $this->jars->get($linetype_name, $line_id);
+        $record_id = @$line->$field_name;
+
+        if (!$record_id) {
+            throw new Exception('Could not determine record_id for download');
+        }
+
+        $file = $this->jars->record($record_table, $record_id, $content_type, $filename);
+
+        return (object) compact('file', 'content_type', 'filename');
+    }
+
     public function fields(): array
     {
         return $this->fields;
@@ -180,10 +206,8 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
 
                 if ($field->downloadable) {
                     $download = $fieldMeta['download'];
-                    $field->download_extension = @$download['extension'];
                     $field->download_icon = @$download['icon'];
-                    $field->download_table = @$download['table'];
-                }
+                 }
 
                 if ($field->type === 'float') {
                     $field->dp = $fieldMeta['dp'] ?? 0;

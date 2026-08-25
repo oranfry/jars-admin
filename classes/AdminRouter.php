@@ -29,6 +29,11 @@ class AdminRouter extends \OranFry\Subsimple\Router
             4 => 'CHILDPATH',
         ],
 
+        'GET /-download/.*' => [
+            'FORWARD' => \OranFry\Ledger\Router::class,
+            'LEDGER_CONFIG' => 'report',
+        ],
+
         'POST /save' => [
             'FORWARD' => \OranFry\Ledger\Router::class,
             'LEDGER_CONFIG' => 'report',
