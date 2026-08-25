@@ -9,8 +9,6 @@ class AdminRouter extends \OranFry\Subsimple\Router
     const CHILDPATH_PATTERN = '(?:/[a-z]+/[a-f0-9]{64})*(?:/[a-z]+)?';
 
     protected static $routes = [
-        // report
-
         'GET /' => [
             'FORWARD' => \OranFry\Ledger\Router::class,
             'LEDGER_CONFIG' => 'report',
@@ -31,7 +29,7 @@ class AdminRouter extends \OranFry\Subsimple\Router
             4 => 'CHILDPATH',
         ],
 
-        'POST /ajax/save' => [
+        'POST /save' => [
             'FORWARD' => \OranFry\Ledger\Router::class,
             'LEDGER_CONFIG' => 'report',
         ],
