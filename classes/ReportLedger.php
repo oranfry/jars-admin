@@ -92,35 +92,31 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
             }
         }
 
+        $extra = $this->jars->extra('reportMeta');
+        $reportMeta = $extra[$this->reportSelector->value] ?? null;
+
         $this->childpath = new ChildNavigator('childpath', [
             'jars' => $this->jars,
             'report' => $this->reportSelector->value,
             'linetype_name' => LINETYPE_NAME,
             'line_id' => LINE_ID,
+            'report_meta' => &$reportMeta,
             'lines' => &$this->lines,
             'linetypes' => &$this->linetypes,
         ]);
 
-        if (count($this->childpath->info)) {
-            $this->fields = [(object) ['name' => 'id|start(6)', 'type' =>'string']];
-        } else {
-            $extra = $this->jars->extra('reportMeta');
+        $this->fields = [];
 
-            $this->fields = [];
-
-            $fields = $extra[$this->reportSelector->value]['fields'] ?? ['id|start(7)', 'type'];
-
-            foreach ($fields as $field) {
-                if (is_string($field)) {
-                    $field = (object) ['name' => $field];
-                }
-
-                if (!@$field->type) {
-                    $field->type = 'string';
-                }
-
-                $this->fields[] = $field;
+        foreach ($reportMeta['fields'] ?? ['name' => 'id|start(6)', 'type' =>'string'] as $field) {
+            if (is_string($field)) {
+                $field = (object) ['name' => $field];
             }
+
+            if (!@$field->type) {
+                $field->type = 'string';
+            }
+
+            $this->fields[] = $field;
         }
 
         $this->linetypeDetails = Obex::from($this->jars->reports())
