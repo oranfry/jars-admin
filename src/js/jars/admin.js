@@ -205,12 +205,21 @@
     };
 
     window.adminPostSave = function (data) {
-        if (typeof window.nestedProperty !== 'undefined' && window.nestedProperty) {
-            let savedId = data[0][window.nestedProperty][0].id;
+        let topChild = getTopChild();
+        let savedId, savedType;
 
-            if (getTopChild().id !== savedId) {
-                window.contextVariableSets['childpath__id_' + (context.childpath.length - 1)] = savedId;
-            }
+        if (window.nestedProperty !== null) {
+            savedId = data[0][window.nestedProperty][0].id;
+            savedType = data[0][window.nestedProperty][0].type;
+        } else {
+            savedId = data[0].id;
+            savedType = data[0].type;
+        }
+
+        if (!context.line) {
+            window.contextVariableSets['line__value'] = savedType + '/' + savedId;
+        } else if (topChild.id !== savedId) {
+            window.contextVariableSets['childpath__id_' + (context.childpath.length - 1)] = savedId;
         }
     };
 })();
