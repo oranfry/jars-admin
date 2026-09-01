@@ -14,13 +14,15 @@ use OranFry\Tools\ContextVariableSets\ChildNavigator;
 class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
 {
     protected GroupNavigator $path;
-    protected ChildNavigator $childpath;
-    protected Value $line;
+    protected ?ChildNavigator $childpath = null;
+    protected ?Value $line = null;
     protected Value $reportSelector;
-    protected ?array $fields = null;
+    protected array $fields = [];
     protected array $lines = [];
     protected array $linetypes = [];
     protected array $linetypeDetails = [];
+    protected $raw = null;
+    protected ?string $showasOverride = null;
 
     public function init(array $viewdata): void
     {
@@ -34,7 +36,7 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
 
         $_GET['report__value'] = REPORT_NAME;
 
-        $reportOptions = array_map(fn ($report) => $report->name, array_filter($reports, fn ($report) => !$report->is_derived));
+        $reportOptions = array_map(fn ($report) => $report->name, $reports);
 
         $this->reportSelector = new Value('report', [
             'options' => $reportOptions,
@@ -42,6 +44,9 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
             'label' => '',
             'manips' => 'path=&line=&childpath=',
         ]);
+
+        $report = Obex::from($this->jars->reports())
+            ->find('name', 'is', $this->reportSelector->value);
 
         foreach (explode('/', GROUP_NAME) as $i => $chunk) {
             $_GET['path__' . $i] = $chunk;
@@ -53,24 +58,7 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
             'manips' => 'line=&childpath=',
         ]);
 
-        $lineOptions = [''];
-
-        if (LINE_ID) {
-            $_GET['line__value'] = LINETYPE_NAME . '/' . LINE_ID;
-            $lineOptions = [LINETYPE_NAME . '/' . substr(LINE_ID, 0, 6) => LINETYPE_NAME . '/' . LINE_ID];   
-        }
-
-        $this->line = new Value('line', [
-            'options' => $lineOptions,
-            'manips' => 'childpath=',
-            'value' =>  LINE_ID ? LINETYPE_NAME . '/' . LINE_ID : null,
-        ]);
-
-        $this->linetypes = $this->jars->linetypes(
-            $this->reportSelector->value,
-        );
-
-        $this->lines = $this->jars->group(
+        $this->raw = $this->jars->group(
             $this->reportSelector->value,
             implode('/', $this->path->value),
             $this->version,
@@ -78,75 +66,96 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
 
         $this->base_version = $this->jars->version();
 
-        $line = LINE_ID ? Obex::from($this->lines)
-            ->filter('type', 'is', LINETYPE_NAME)
-            ->find('id', 'is', LINE_ID) : null;
+        if ($report->is_derived) {
+            $this->showasOverride = 'raw';
+        } else {
+            $this->lines = $this->raw;
 
-        $childpathPieces = explode('/', ltrim(CHILDPATH ?? '', '/'));
+            $lineOptions = [''];
 
-        for ($i = 0; $property = array_shift($childpathPieces); $i++) {
-            $_GET['childpath__property_' . $i] = $property;
+            if (LINE_ID) {
+                $_GET['line__value'] = LINETYPE_NAME . '/' . LINE_ID;
+                $lineOptions = [LINETYPE_NAME . '/' . substr(LINE_ID, 0, 6) => LINETYPE_NAME . '/' . LINE_ID];   
+            }
 
-            if ($id = array_shift($childpathPieces)) {
-                $_GET['childpath__id_' . $i] = $id;
+            $this->line = new Value('line', [
+                'options' => $lineOptions,
+                'manips' => 'childpath=',
+                'value' =>  LINE_ID ? LINETYPE_NAME . '/' . LINE_ID : null,
+            ]);
+
+            $this->linetypes = $this->jars->linetypes(
+                $this->reportSelector->value,
+            );
+
+            $line = LINE_ID ? Obex::from($this->lines)
+                ->filter('type', 'is', LINETYPE_NAME)
+                ->find('id', 'is', LINE_ID) : null;
+
+            $childpathPieces = explode('/', ltrim(CHILDPATH ?? '', '/'));
+
+            for ($i = 0; $property = array_shift($childpathPieces); $i++) {
+                $_GET['childpath__property_' . $i] = $property;
+
+                if ($id = array_shift($childpathPieces)) {
+                    $_GET['childpath__id_' . $i] = $id;
+                }
+            }
+
+            $extra = $this->jars->extra('reportMeta');
+            $reportMeta = $extra[$this->reportSelector->value] ?? null;
+
+            $this->childpath = new ChildNavigator('childpath', [
+                'jars' => $this->jars,
+                'report' => $this->reportSelector->value,
+                'linetype_name' => LINETYPE_NAME,
+                'line_id' => LINE_ID,
+                'report_meta' => &$reportMeta,
+                'lines' => &$this->lines,
+                'linetypes' => &$this->linetypes,
+            ]);
+
+            foreach ($reportMeta['fields'] ?? ['name' => 'id|start(6)', 'type' =>'string'] as $key => $field) {
+                if (is_string($field)) {
+                    $field = ['name' => $field];
+                }
+
+                if (is_array($field)) {
+                    $field = (object) $field;
+                }
+
+                if (!isset($field->name) && is_string($key)) {
+                    $field->name = $key;
+                }
+
+                if (!@$field->type) {
+                    $field->type = 'string';
+                }
+
+                $this->fields[] = $field;
+
+                $this->linetypeDetails = $report->linetypes;
+
+                if ($showasRaw) {
+                    $onlyId = $this->childpath->value ? end($this->childpath->value)->id : LINE_ID;
+
+                    if ($onlyId) {
+                        $this->lines = Obex::filter($this->lines, 'id', 'is', $onlyId);
+                    }
+                }
             }
         }
-
-        $extra = $this->jars->extra('reportMeta');
-        $reportMeta = $extra[$this->reportSelector->value] ?? null;
-
-        $this->childpath = new ChildNavigator('childpath', [
-            'jars' => $this->jars,
-            'report' => $this->reportSelector->value,
-            'linetype_name' => LINETYPE_NAME,
-            'line_id' => LINE_ID,
-            'report_meta' => &$reportMeta,
-            'lines' => &$this->lines,
-            'linetypes' => &$this->linetypes,
-        ]);
-
-        $this->fields = [];
-
-        foreach ($reportMeta['fields'] ?? ['name' => 'id|start(6)', 'type' =>'string'] as $key => $field) {
-            if (is_string($field)) {
-                $field = ['name' => $field];
-            }
-
-            if (is_array($field)) {
-                $field = (object) $field;
-            }
-
-            if (!isset($field->name) && is_string($key)) {
-                $field->name = $key;
-            }
-
-            if (!@$field->type) {
-                $field->type = 'string';
-            }
-
-            $this->fields[] = $field;
-        }
-
-        $this->linetypeDetails = Obex::from($this->jars->reports())
-            ->find('name', 'is', $this->reportSelector->value)
-            ->linetypes;
 
         if ($showasRaw) {
             $_GET['showas__value'] = 'raw';
-
-            $onlyId = $this->childpath->value ? end($this->childpath->value)->id : LINE_ID;
-
-            if ($onlyId) {
-                $this->lines = Obex::filter($this->lines, 'id', 'is', $onlyId);
-            }
         }
     }
 
     public function context(): ?object
     {
         return (object) [
-            'line' => $this->childpath->info ? $this->jars->flatten($this->childpath->context) : null,
-            'childpath' => $this->childpath->info,
+            'line' => @$this->childpath->info ? $this->jars->flatten($this->childpath->context) : null,
+            'childpath' => @$this->childpath->info,
         ];
     }
 
@@ -234,9 +243,19 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
         return $linetypes;
     }
 
+    public function raw()
+    {
+        return $this->raw ?? $this->lines();
+    }
+
     public function showas(): array
     {
         return ['list', 'raw'];
+    }
+
+    public function showasOverride(): ?string
+    {
+        return $this->showasOverride;
     }
 
     public function title(): string
@@ -268,11 +287,11 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
 
     public function variables(): array
     {
-        return [
+        return array_values(array_filter([
             $this->reportSelector,
             $this->path,
             $this->line,
             $this->childpath,
-        ];
+        ]));
     }
 }

@@ -2,11 +2,11 @@
 
 use OranFry\ContextVariableSets\ContextVariableSet;
 
-$lastChildpath = end(ContextVariableSet::get('childpath')->value);
-
 echo '<script>';
 
 if (LINE_ID) {
+    $lastChildpath = end(ContextVariableSet::get('childpath')->value);
+
     ?>window.line_id = '<?= LINE_ID ?>';<?php
     ?>window.linetype_name = '<?= LINETYPE_NAME ?>';<?php
 
