@@ -180,9 +180,21 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
         return $this->fields;
     }
 
+    public function groupingInfo(): ?object
+    {
+        return (object) [
+            'groupings' => [''],
+        ];
+    }
+
     public function hideTitle(): bool
     {
         return true;
+    }
+
+    public function lineGrouping(object $line): ?string
+    {
+        return '';
     }
 
     public function lines(): ?array
