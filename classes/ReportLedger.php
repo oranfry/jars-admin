@@ -107,9 +107,17 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
 
         $this->fields = [];
 
-        foreach ($reportMeta['fields'] ?? ['name' => 'id|start(6)', 'type' =>'string'] as $field) {
+        foreach ($reportMeta['fields'] ?? ['name' => 'id|start(6)', 'type' =>'string'] as $key => $field) {
             if (is_string($field)) {
-                $field = (object) ['name' => $field];
+                $field = ['name' => $field];
+            }
+
+            if (is_array($field)) {
+                $field = (object) $field;
+            }
+
+            if (!isset($field->name) && is_string($key)) {
+                $field->name = $key;
             }
 
             if (!@$field->type) {
