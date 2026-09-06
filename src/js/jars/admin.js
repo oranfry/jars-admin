@@ -44,7 +44,7 @@
 
         let childR = !!childParts.length ? '/' + childParts.join('/') : '';
 
-        let url = window.toolsPluginMountPoint + '/' + data.report__value + groupR + lineR + childR;
+        let url = window.toolsPluginMountPoint + '/primary/' + data.report__value + groupR + lineR + childR;
 
         delete(data.report__value);
         delete(data.line__value);
@@ -221,5 +221,43 @@
         } else if (topChild.id !== savedId) {
             window.contextVariableSets['childpath__id_' + (context.childpath.length - 1)] = savedId;
         }
+    };
+
+    window.rawlineSave = function(e) {
+        e.preventDefault();
+        var data;
+
+        try {
+            data = JSON.parse($(this).closest('form').find('[name="raw"]').val());
+        } catch(e) {
+            alert(e);
+
+            return;
+        }
+
+        if (data.constructor !== Array) {
+            if (typeof data === 'object') {
+                data = [data];
+            } else {
+                alert('Please provide an object or array of objects');
+
+                return;
+            }
+        }
+
+        $.ajax(window.adminBaseUrl + '/save', {
+            method: 'post',
+            contentType: false,
+            processData: false,
+            data: JSON.stringify(data),
+            headers: prepareSaveHeaders(false),
+            success: function(data, textStatus, request) {
+                window.contextVariableSets.version = request.getResponseHeader('X-Version');
+                cvsApply();
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
     };
 })();
