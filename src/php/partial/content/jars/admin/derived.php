@@ -5,8 +5,6 @@ echo '<script>';
 echo '</script>';
 
 ?><div style="margin: 1em"><?php
-    ?><a href="<?= $back ?>">Back</a><br><br><?php
-
     ?><form method="post"><?php
         ?><div><?php
             ?><textarea name="raw" class="raw"><?= json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES); ?></textarea><?php
