@@ -268,6 +268,20 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
         return $linetypes;
     }
 
+    public function save(array $data): array
+    {
+        $result = parent::save($data);
+
+        if (
+            defined('JARS_ADMIN_REFRESH_ON_SAVE')
+            && JARS_ADMIN_REFRESH_ON_SAVE
+        ) {
+            $this->jars->refresh();
+        }
+
+        return $result;
+    }
+
     public function showas(): array
     {
         if (!$this->reportSelector) {
