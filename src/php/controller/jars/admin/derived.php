@@ -13,6 +13,13 @@ $baseUrl = implode('', EATENS);
 $reportOptions = Obex::from($jars->reports())
     ->filter('is_derived', 'is', true);
 
+if (!$reportOptions->count()) {
+    return [
+        'title' => 'No Derived Reports',
+        'report' => null,
+    ];
+}
+
 $reportSelector = new Value('report', [
     'options' => $reportOptions->map('name'),
     'nullable' => false,
@@ -36,4 +43,4 @@ $base_version = $jars->version();
 
 $title = $report->name;
 
-return compact('base_version', 'data', 'title');
+return compact('base_version', 'data', 'title', 'report');

@@ -23,7 +23,7 @@ class AdminRouter extends \OranFry\Subsimple\Router
             'PAGE' => 'jars/admin/derived',
         ],
 
-        'GET /primary/([a-z]+)(?:/(' . Constants::GROUP_PATTERN  . ')(?::([a-z]+)/([a-f0-9]{64})(' . self::CHILDPATH_PATTERN . '))?)?' => [
+        'GET /primary(?:/([a-z]+)(?:/(' . Constants::GROUP_PATTERN  . ')(?::([a-z]+)/([a-f0-9]{64})(' . self::CHILDPATH_PATTERN . '))?)?)?' => [
             'FORWARD' => \OranFry\Ledger\Router::class,
             'LEDGER_CONFIG' => 'report',
             0 => 'REPORT_NAME',

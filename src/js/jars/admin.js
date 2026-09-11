@@ -1,5 +1,15 @@
 (function() {
     window.adminMakeUrl = function (data) {
+        let url = window.toolsPluginMountPoint + '/primary';
+
+        if (typeof data.report__value === 'undefined') {
+            return url;
+        }
+
+        url += '/' + data.report__value;
+
+        delete(data.report__value);
+
         let groupParts = [];
 
         for (let i = 0;; i++) {
@@ -44,9 +54,9 @@
 
         let childR = !!childParts.length ? '/' + childParts.join('/') : '';
 
-        let url = window.toolsPluginMountPoint + '/primary/' + data.report__value + groupR + lineR + childR;
 
-        delete(data.report__value);
+        url += groupR + lineR + childR;
+
         delete(data.line__value);
 
         if (data.showas__value === 'list') {

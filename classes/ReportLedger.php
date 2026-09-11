@@ -13,12 +13,12 @@ use OranFry\Tools\ContextVariableSets\ChildNavigator;
 
 class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
 {
-    protected GroupNavigator $path;
+    protected ?GroupNavigator $path = null;
     protected ?ChildNavigator $childpath = null;
     protected ?Value $line = null;
-    protected Value $reportSelector;
+    protected ?Value $reportSelector = null;
     protected array $fields = [];
-    protected array $lines = [];
+    protected ?array $lines = null;
     protected array $linetypes = [];
     protected array $linetypeDetails = [];
     protected $raw = null;
@@ -49,6 +49,10 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
         }
 
         $_GET['report__value'] = REPORT_NAME;
+
+        if (!$reportOptions) {
+            return ;
+        }
 
         $this->reportSelector = new Value('report', [
             'options' => $reportOptions,
@@ -200,6 +204,11 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
         return (object) compact('file', 'content_type', 'filename');
     }
 
+    public function error(): ?string
+    {
+        return 'No Reports';
+    }
+
     public function fields(): array
     {
         return $this->fields;
@@ -261,6 +270,10 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
 
     public function showas(): array
     {
+        if (!$this->reportSelector) {
+            return ['list'];
+        }
+
         return ['list', 'raw'];
     }
 
@@ -271,7 +284,7 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
 
     public function title(): string
     {
-        return 'Report &bull; ' . implode('/', [$this->reportSelector->value, ...$this->path->value]);
+        return 'Report &bull; ' . implode('/', array_filter([@$this->reportSelector->value, ...($this->path->value ?? [])]));
     }
 
     public function underTableItems(): array
