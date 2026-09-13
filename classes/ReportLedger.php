@@ -136,7 +136,7 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
             'linetypes' => &$this->linetypes,
         ]);
 
-        foreach ($reportMeta ?? ['name' => 'id|start(6)', 'type' =>'string'] as $key => $field) {
+        foreach ($reportMeta['fields'] ?? ['name' => 'id|start(6)', 'type' =>'string'] as $key => $field) {
             if (is_string($field)) {
                 $field = ['name' => $field];
             }
