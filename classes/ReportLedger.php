@@ -124,7 +124,7 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
             }
         }
 
-        $reportMeta = $reportMetas[$report->name] ?? null;
+        $reportMeta = $reportMetas[$report->name] ?? $reportMetas[REPORT_NAME ?? '/']['fields'] ?? null;
 
         $this->childpath = new ChildNavigator('childpath', [
             'jars' => $this->jars,
@@ -136,7 +136,7 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
             'linetypes' => &$this->linetypes,
         ]);
 
-        foreach ($reportMetas[REPORT_NAME ?? '/']['fields'] ?? $reportMetas[$report->name]['fields'] ?? ['name' => 'id|start(6)', 'type' =>'string'] as $key => $field) {
+        foreach ($reportMeta ?? ['name' => 'id|start(6)', 'type' =>'string'] as $key => $field) {
             if (is_string($field)) {
                 $field = ['name' => $field];
             }
