@@ -75,7 +75,7 @@ class ReportLedger extends \OranFry\Ledger\JarsAwareConfig
             }
         }
 
-        foreach (explode('/', GROUP_NAME) as $i => $chunk) {
+        foreach (explode('/', GROUP_NAME ?? '') as $i => $chunk) {
             $_GET['path__' . $i] = $chunk;
         }
 
