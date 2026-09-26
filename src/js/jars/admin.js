@@ -1,6 +1,6 @@
 (function() {
     window.adminMakeUrl = function (data) {
-        let url = window.toolsPluginMountPoint + '/primary';
+        let url = window.toolsBaseUrl + window.toolsPluginMountPoint + '/primary';
 
         if (typeof data.report__value === 'undefined') {
             return url;
