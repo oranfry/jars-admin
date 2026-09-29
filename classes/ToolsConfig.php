@@ -19,8 +19,8 @@ class ToolsConfig extends \OranFry\Tools\Config
 
     public function custom(object $config, ?string $httpMountPoint, ?string $cliMountPoint, array $options): void
     {
-        define('JARS_ADMIN_BASEPATH', (defined('TOOLS_BASE_URL') ? TOOLS_BASE_URL : null) . $httpMountPoint);
-        define('JARS_ADMIN_HOMEPATH', (defined('TOOLS_BASE_URL') ? TOOLS_BASE_URL : null) . $httpMountPoint);
+        define('JARS_ADMIN_BASEPATH', TOOLS_BASE_URL . $httpMountPoint);
+        define('JARS_ADMIN_HOMEPATH', TOOLS_BASE_URL . $httpMountPoint);
 
         $config->ledger = ($config->ledger ?? []) + [
             'report' => ReportLedger::class,
