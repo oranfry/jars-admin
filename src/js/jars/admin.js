@@ -1,67 +1,69 @@
 (function() {
     window.adminMakeUrl = function (data) {
-        let url = window.toolsBaseUrl + window.toolsPluginMountPoint + '/primary';
+        // first gather all variables we might need, and remove them from
+        // further consideration
 
-        if (typeof data.report__value === 'undefined') {
-            return url;
-        }
-
-        url += '/' + data.report__value;
-
+        let report = data.report__value;
         delete(data.report__value);
 
-        let groupParts = [];
+        let path = [];
 
         for (let i = 0;; i++) {
             if (typeof data['path__' + i] === 'undefined') {
                 break;
             }
 
-            groupParts.push(data['path__' + i]);
+            path.push(data['path__' + i]);
             delete(data['path__' + i]);
         }
 
-        let groupR = '/' + groupParts.join('/');
-        let lineR = '';
+        let line = data.line__value;
+        delete(data.line__value);
 
-        if (typeof data.line__value !== 'undefined') {
-            lineR = ':' + data.line__value;
-        }
-
-        let childParts = [];
+        let childPath = [];
 
         for (let i = 0;; i++) {
             if (typeof data['childpath__property_' + i] === 'undefined') {
                 break;
             }
 
-            if (typeof data.line__value !== 'undefined') {
-                childParts.push(data['childpath__property_' + i]);
-            }
-
+            childPath.push(data['childpath__property_' + i]);
             delete(data['childpath__property_' + i]);
 
             if (typeof data['childpath__id_' + i] === 'undefined') {
                 break;
             }
 
-            if (typeof data.line__value !== 'undefined') {
-                childParts.push(data['childpath__id_' + i]);
-            }
-
+            childPath.push(data['childpath__id_' + i]);
             delete(data['childpath__id_' + i]);
         }
-
-        let childR = !!childParts.length ? '/' + childParts.join('/') : '';
-
-
-        url += groupR + lineR + childR;
-
-        delete(data.line__value);
 
         if (data.showas__value === 'list') {
             delete(data.showas__value);
         }
+
+        // now construct a URL from what we have gathered
+
+        let url = window.toolsBaseUrl + window.toolsPluginMountPoint + '/primary';
+
+        if (typeof report === 'undefined') {
+            return url;
+        }
+
+        url += '/' + report;
+        url += '/' + path.join('/');
+
+        if (typeof line === 'undefined' || line.includes(',')) {
+            return url;
+        }
+
+        url += ':' + line;
+
+        if (!childPath.length) {
+            return url;
+        }
+
+        url += '/' + childPath.join('/');
 
         return url;
     };
